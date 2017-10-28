@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using PizzaCalories.Utilities;
 
-namespace PizzaCalories.Models
+namespace PizzaCalories.Utilities
 {
-    public static class Ingredients
+    public static class IngredientsHelper
     {
         private static readonly IDictionary<string, double> DoughsWithModifiers = new Dictionary<string, double>
         {

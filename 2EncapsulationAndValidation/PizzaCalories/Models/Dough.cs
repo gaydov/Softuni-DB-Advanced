@@ -20,7 +20,7 @@ namespace PizzaCalories.Models
         {
             set
             {
-                if (!Ingredients.IsDoughValid(value))
+                if (!IngredientsHelper.IsDoughValid(value))
                 {
                     throw new ArgumentException(ErrorMessages.DoughInvalidType);
                 }
@@ -33,7 +33,7 @@ namespace PizzaCalories.Models
         {
             set
             {
-                if (!Ingredients.IsDoughValid(value))
+                if (!IngredientsHelper.IsDoughValid(value))
                 {
                     throw new ArgumentException(ErrorMessages.DoughInvalidType);
                 }
@@ -62,7 +62,7 @@ namespace PizzaCalories.Models
 
         public double CalcCalogies()
         {
-            double result = this.WeightGrams * Constants.DoughBaseCaloriesPerGram * Ingredients.GetDoughModifier(this.flourType) * Ingredients.GetDoughModifier(this.bakingTechnique);
+            double result = this.WeightGrams * Constants.DoughBaseCaloriesPerGram * IngredientsHelper.GetDoughModifier(this.flourType) * IngredientsHelper.GetDoughModifier(this.bakingTechnique);
             return result;
         }
     }

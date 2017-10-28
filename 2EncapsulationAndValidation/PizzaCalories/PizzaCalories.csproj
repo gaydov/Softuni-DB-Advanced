@@ -45,7 +45,7 @@
     <Compile Include="Core\Engine.cs" />
     <Compile Include="Launcher.cs" />
     <Compile Include="Models\Dough.cs" />
-    <Compile Include="Models\Ingredients.cs" />
+    <Compile Include="Utilities\IngredientsHelper.cs" />
     <Compile Include="Models\Pizza.cs" />
     <Compile Include="Models\Topping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

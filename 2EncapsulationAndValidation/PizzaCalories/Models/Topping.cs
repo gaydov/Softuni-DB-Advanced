@@ -23,7 +23,7 @@ namespace PizzaCalories.Models
 
             set
             {
-                if (!Ingredients.IsToppingValid(value))
+                if (!IngredientsHelper.IsToppingValid(value))
                 {
                     throw new ArgumentException(string.Format(ErrorMessages.ToppingInvalidType, value));
                 }
@@ -52,7 +52,7 @@ namespace PizzaCalories.Models
 
         public double CalcCalories()
         {
-            double result = this.Weight * Constants.ToppingBaseCaloriesPerGram * Ingredients.GetToppingModifier(this.Type);
+            double result = this.Weight * Constants.ToppingBaseCaloriesPerGram * IngredientsHelper.GetToppingModifier(this.Type);
             return result;
         }
     }
