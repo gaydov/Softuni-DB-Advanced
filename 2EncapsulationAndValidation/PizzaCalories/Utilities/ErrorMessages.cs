@@ -14,6 +14,7 @@
         public const string PizzaInvalidName = "Pizza name should be between {0} and {1} symbols.";
         public const string PizzaInvalidToppingsCount = "Number of toppings should be in range [{0}..{1}].";
 
+        // Ingredients messages
         public const string ModifierInvalid = "Such a modifier does not exist.";
     }
 }
