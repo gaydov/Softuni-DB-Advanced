@@ -24,14 +24,14 @@ namespace Mankind.Models
 
             protected set
             {
-                if (!char.IsUpper(value[0]))
-                {
-                    throw new ArgumentException(string.Format(ErrorMessages.NameInvalid, nameof(this.firstName)));
-                }
-
                 if (value.Length < Constants.FirstNameMinLenght)
                 {
                     throw new ArgumentException(string.Format(ErrorMessages.NameMinLenghtInvalid, Constants.FirstNameMinLenght, nameof(this.firstName)));
+                }
+
+                if (!char.IsUpper(value[0]))
+                {
+                    throw new ArgumentException(string.Format(ErrorMessages.NameInvalid, nameof(this.firstName)));
                 }
 
                 this.firstName = value;
@@ -47,14 +47,14 @@ namespace Mankind.Models
 
             protected set
             {
-                if (!char.IsUpper(value[0]))
-                {
-                    throw new ArgumentException(string.Format(ErrorMessages.NameInvalid, nameof(this.lastName)));
-                }
-
                 if (value.Length < Constants.LastNameMinLenght)
                 {
                     throw new ArgumentException(string.Format(ErrorMessages.NameMinLenghtInvalid, Constants.LastNameMinLenght, nameof(this.lastName)));
+                }
+
+                if (!char.IsUpper(value[0]))
+                {
+                    throw new ArgumentException(string.Format(ErrorMessages.NameInvalid, nameof(this.lastName)));
                 }
 
                 this.lastName = value;
