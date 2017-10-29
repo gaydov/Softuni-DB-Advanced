@@ -24,7 +24,8 @@ namespace Mankind.Models
 
             private set
             {
-                if (!value.All(char.IsLetterOrDigit) || (value.Length < Constants.StudentFacNumberMinLenght || value.Length > Constants.StudentFacNumberMaxLenght))
+                if (value.Length < Constants.StudentFacNumberMinLenght || value.Length > Constants.StudentFacNumberMaxLenght
+                    || !value.All(char.IsLetterOrDigit))
                 {
                     throw new ArgumentException(ErrorMessages.StudentInvalidFacultyNumber);
                 }
