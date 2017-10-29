@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using PizzaCalories.Utilities;
 
 namespace PizzaCalories.Models
@@ -13,8 +14,8 @@ namespace PizzaCalories.Models
         public Pizza(string name, Dough dough)
         {
             this.Name = name;
-            this.toppings = new List<Topping>();
             this.dough = dough;
+            this.toppings = new List<Topping>();
         }
 
         public string Name
@@ -28,35 +29,28 @@ namespace PizzaCalories.Models
             {
                 if (string.IsNullOrEmpty(value) || value.Length > 15)
                 {
-                    throw new ArgumentException(string.Format(ErrorMessages.PizzaInvalidName, Constants.PizzaNameMinLenght, Constants.PizzaNameMaxLenght));
+                    throw new ArgumentException(string.Format(ErrorMessages.PizzaInvalidName,
+                        Constants.PizzaNameMinLenght, Constants.PizzaNameMaxLenght));
                 }
 
                 this.name = value;
             }
         }
 
-        public int ToppingsCount
-        {
-            get
-            {
-                return this.toppings.Count;
-            }
-        }
-
         public void AddTopping(Topping topping)
         {
             this.toppings.Add(topping);
+
+            if (this.toppings.Count > Constants.PizzaMaxToppingsCount)
+            {
+                throw new ArgumentException(string.Format(ErrorMessages.PizzaInvalidToppingsCount, Constants.PizzaMinToppingsCount, Constants.PizzaMaxToppingsCount));
+            }
         }
 
         public double CalcTotalCalories()
         {
             double doughCalories = this.dough.CalcCalogies();
-            double toppingsCalories = 0;
-
-            foreach (Topping topping in this.toppings)
-            {
-                toppingsCalories += topping.CalcCalories();
-            }
+            double toppingsCalories = this.toppings.Sum(t => t.CalcCalories());
 
             return doughCalories + toppingsCalories;
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using PizzaCalories.Models;
-using PizzaCalories.Utilities;
 
 namespace PizzaCalories.Core
 {
@@ -14,8 +13,8 @@ namespace PizzaCalories.Core
             string[] doughInfo = Console.ReadLine().Split();
             string flourType = doughInfo[1];
             string bakingTechnique = doughInfo[2];
-            double doughtWeight = double.Parse(doughInfo[3]);
-            Dough dough = new Dough(flourType, bakingTechnique, doughtWeight);
+            double doughWeight = double.Parse(doughInfo[3]);
+            Dough dough = new Dough(flourType, bakingTechnique, doughWeight);
             
             Pizza pizza = new Pizza(pizzaName, dough);
  
@@ -29,11 +28,6 @@ namespace PizzaCalories.Core
                 pizza.AddTopping(topping);
 
                 toppingInfo = Console.ReadLine();
-            }
-
-            if (pizza.ToppingsCount > Constants.PizzaMaxToppingsCount)
-            {
-                throw new ArgumentException(string.Format(ErrorMessages.PizzaInvalidToppingsCount, Constants.PizzaMinToppingsCount, Constants.PizzaMaxToppingsCount));
             }
 
             Console.WriteLine($"{pizza.Name} - {pizza.CalcTotalCalories():F2} Calories.");

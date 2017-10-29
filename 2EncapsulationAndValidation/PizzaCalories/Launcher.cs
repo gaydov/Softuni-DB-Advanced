@@ -1,6 +1,5 @@
 ﻿using System;
 using PizzaCalories.Core;
-using PizzaCalories.Models;
 
 namespace PizzaCalories
 {
