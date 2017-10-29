@@ -26,11 +26,15 @@ namespace BookShop.Models
 
             protected set
             {
-                int indexOfSpace = value.IndexOf(' ');
+                string[] names = value.Split();
 
-                if (char.IsDigit(value[indexOfSpace + 1]))
+                if (names.Length > 1)
                 {
-                    throw new ArgumentException(ErrorMessages.AuthorInvalidName);
+                    char secondNameFirstLetter = names[1][0];
+                    if (char.IsDigit(secondNameFirstLetter))
+                    {
+                        throw new ArgumentException(ErrorMessages.AuthorInvalidName);
+                    }
                 }
 
                 this.author = value;
