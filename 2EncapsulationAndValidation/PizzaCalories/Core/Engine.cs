@@ -1,4 +1,5 @@
-﻿using PizzaCalories.Core.IO;
+﻿using System;
+using PizzaCalories.Core.IO;
 using PizzaCalories.Interfaces;
 using PizzaCalories.Models;
 using PizzaCalories.Utilities;
@@ -20,7 +21,16 @@ namespace PizzaCalories.Core
 
         public void Run()
         {
-            this.ProcessInput(this.reader);
+            try
+            {
+                this.ProcessInput(this.reader);
+            }
+            catch (Exception e)
+            {
+                this.writer.WriteLine(e.Message);
+                return;
+            }
+
             this.PrintOutput(this.writer);
         }
 
