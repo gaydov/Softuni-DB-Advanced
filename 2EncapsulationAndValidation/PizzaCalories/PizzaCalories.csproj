@@ -43,6 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Engine.cs" />
+    <Compile Include="Core\IO\ConsoleReader.cs" />
+    <Compile Include="Core\IO\ConsoleWriter.cs" />
+    <Compile Include="Interfaces\IReader.cs" />
+    <Compile Include="Interfaces\IWriter.cs" />
     <Compile Include="Launcher.cs" />
     <Compile Include="Models\Dough.cs" />
     <Compile Include="Utilities\IngredientsHelper.cs" />

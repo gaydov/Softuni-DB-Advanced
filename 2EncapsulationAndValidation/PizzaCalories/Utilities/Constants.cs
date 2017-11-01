@@ -2,6 +2,8 @@
 {
     public static class Constants
     {
+        public const string EndOfInputCmd = "END";
+
         // Dough constants
         public const double DoughBaseCaloriesPerGram = 2;
         public const double DoughMinWeight = 1;
