@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using P02_DatabaseFirst.Data;
 
@@ -12,10 +13,11 @@ namespace EmployeesWithSalaryOver50K
 
             using (db)
             {
-                var employeesNames = db.Employees
+                List<string> employeesNames = db.Employees
                     .Where(e => e.Salary > 50000)
                     .Select(e => e.FirstName)
-                    .OrderBy(n => n);
+                    .OrderBy(n => n)
+                    .ToList();
 
                 foreach (string name in employeesNames)
                 {

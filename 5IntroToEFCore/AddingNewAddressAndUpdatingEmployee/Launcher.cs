@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using P02_DatabaseFirst.Data;
 using P02_DatabaseFirst.Data.Models;
@@ -23,11 +24,12 @@ namespace AddingNewAddressAndUpdatingEmployee
                 employee.Address = address;
                 db.SaveChanges();
 
-                var employeesAddresses = db.Employees
+                List<string> employeesAddresses = db.Employees
                     .Select(e => e.Address)
                     .OrderByDescending(a => a.AddressId)
                     .Take(10)
-                    .Select(a => a.AddressText);
+                    .Select(a => a.AddressText)
+                    .ToList();
 
                 foreach (string empAddress in employeesAddresses)
                 {
