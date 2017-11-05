@@ -122,7 +122,7 @@ namespace P02_DatabaseFirst.Data
                     .HasConstraintName("FK_Employees_Departments");
 
                 entity.HasOne(d => d.Manager)
-                    .WithMany(p => p.InverseManager)
+                    .WithMany(p => p.Subordinates)
                     .HasForeignKey(d => d.ManagerId)
                     .HasConstraintName("FK_Employees_Employees");
             });

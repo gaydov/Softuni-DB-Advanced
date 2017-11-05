@@ -20,8 +20,7 @@ namespace EmployeesFullInformation
                         e.MiddleName,
                         e.JobTitle,
                         e.Salary
-                    })
-                    .ToList();
+                    });
 
                 foreach (var emp in employeesData)
                 {

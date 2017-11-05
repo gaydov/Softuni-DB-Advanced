@@ -25,9 +25,9 @@ namespace AddingNewAddressAndUpdatingEmployee
 
                 var employeesAddresses = db.Employees
                     .Select(e => e.Address)
-                    .OrderByDescending(e => e.AddressId)
+                    .OrderByDescending(a => a.AddressId)
                     .Take(10)
-                    .Select(e => e.AddressText);
+                    .Select(a => a.AddressText);
 
                 foreach (string empAddress in employeesAddresses)
                 {
