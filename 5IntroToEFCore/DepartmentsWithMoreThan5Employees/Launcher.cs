@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using P02_DatabaseFirst.Data;
@@ -10,18 +11,19 @@ namespace DepartmentsWithMoreThan5Employees
     {
         public static void Main()
         {
-            // NOT WORKING IN JUDGE
             SoftUniContext db = new SoftUniContext();
 
             using (db)
             {
-                var departments = db.Departments
+                List<Department> selectedDepartments = db.Departments
                     .Where(d => d.Employees.Count > 5)
                     .Include(d => d.Manager)
                     .Include(d => d.Employees)
-                    .OrderBy(d => d.Employees.Count);
+                    .OrderBy(d => d.Employees.Count)
+                    .ThenBy(d => d.Name)
+                    .ToList();
 
-                foreach (Department department in departments)
+                foreach (Department department in selectedDepartments)
                 {
                     Console.WriteLine($"{department.Name} - {department.Manager.FirstName} {department.Manager.LastName}");
 
