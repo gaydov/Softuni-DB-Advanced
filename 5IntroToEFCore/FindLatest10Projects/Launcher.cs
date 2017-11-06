@@ -15,13 +15,19 @@ namespace FindLatest10Projects
 
             using (db)
             {
-                List<Project> latestTenProjects = db.Projects
+                var latestTenProjects = db.Projects
                     .OrderByDescending(p => p.StartDate)
                     .Take(10)
                     .OrderBy(p => p.Name)
+                    .Select(p => new
+                    {
+                        p.Name,
+                        p.Description,
+                        p.StartDate
+                    })
                     .ToList();
 
-                foreach (Project project in latestTenProjects)
+                foreach (var project in latestTenProjects)
                 {
                     Console.WriteLine(project.Name);
                     Console.WriteLine(project.Description);

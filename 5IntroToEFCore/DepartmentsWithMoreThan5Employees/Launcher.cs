@@ -15,15 +15,19 @@ namespace DepartmentsWithMoreThan5Employees
 
             using (db)
             {
-                List<Department> selectedDepartments = db.Departments
+                var selectedDepartments = db.Departments
                     .Where(d => d.Employees.Count > 5)
-                    .Include(d => d.Manager)
-                    .Include(d => d.Employees)
                     .OrderBy(d => d.Employees.Count)
                     .ThenBy(d => d.Name)
+                    .Select(d => new
+                    {
+                        d.Name,
+                        d.Manager,
+                        d.Employees
+                    })
                     .ToList();
 
-                foreach (Department department in selectedDepartments)
+                foreach (var department in selectedDepartments)
                 {
                     Console.WriteLine($"{department.Name} - {department.Manager.FirstName} {department.Manager.LastName}");
 

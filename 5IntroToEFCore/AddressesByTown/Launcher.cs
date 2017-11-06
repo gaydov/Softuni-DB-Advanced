@@ -15,17 +15,21 @@ namespace AddressesByTown
 
             using (db)
             {
-                List<Address> selectedAddresses = db.Addresses
-                    .Include(a => a.Employees)
-                    .Include(a => a.Town)
+                var selectedAddresses = db.Addresses
                     .OrderByDescending(a => a.Employees.Count)
                     .ThenBy(a => a.Town.Name)
                     .Take(10)
+                    .Select(a => new
+                    {
+                        Text = a.AddressText,
+                        Town = a.Town.Name,
+                        EmployeesCount = a.Employees.Count
+                    })
                     .ToList();
 
-                foreach (Address address in selectedAddresses)
+                foreach (var address in selectedAddresses)
                 {
-                    Console.WriteLine($"{address.AddressText}, {address.Town.Name} - {address.Employees.Count} employees");
+                    Console.WriteLine($"{address.Text}, {address.Town} - {address.EmployeesCount} employees");
                 }
             }
         }

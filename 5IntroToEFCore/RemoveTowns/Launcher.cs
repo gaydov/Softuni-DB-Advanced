@@ -29,7 +29,7 @@ namespace RemoveTowns
 
                 db.Addresses.RemoveRange(addressesFromTheTargetTown);
                 Town townToBeDeleted = db.Towns.SingleOrDefault(t => t.Name.Equals(townToBeDeletedName));
-                db.Towns.Remove(townToBeDeleted);                
+                db.Towns.Remove(townToBeDeleted);
                 db.SaveChanges();
 
                 int removedAddressesCount = addressesFromTheTargetTown.Count;

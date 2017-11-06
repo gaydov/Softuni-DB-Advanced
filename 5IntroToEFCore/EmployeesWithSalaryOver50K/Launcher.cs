@@ -15,8 +15,8 @@ namespace EmployeesWithSalaryOver50K
             {
                 List<string> employeesNames = db.Employees
                     .Where(e => e.Salary > 50000)
+                    .OrderBy(e => e.FirstName)
                     .Select(e => e.FirstName)
-                    .OrderBy(n => n)
                     .ToList();
 
                 foreach (string name in employeesNames)

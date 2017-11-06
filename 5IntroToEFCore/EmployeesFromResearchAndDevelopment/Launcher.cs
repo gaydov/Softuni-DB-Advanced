@@ -14,15 +14,15 @@ namespace EmployeesFromResearchAndDevelopment
             {
                 var selectedEmployees = db.Employees
                     .Where(e => e.Department.Name.Equals("Research and Development"))
+                    .OrderBy(e => e.Salary)
+                    .ThenByDescending(e => e.FirstName)
                     .Select(e => new
                     {
                         e.FirstName,
                         e.LastName,
                         e.Department,
                         e.Salary
-                    })
-                    .OrderBy(e => e.Salary)
-                    .ThenByDescending(e => e.FirstName);
+                    });
 
                 foreach (var employee in selectedEmployees)
                 {
