@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using P02_DatabaseFirst.Data;
-using P02_DatabaseFirst.Data.Models;
 
 namespace Employee147
 {
@@ -16,18 +14,27 @@ namespace Employee147
             {
                 const int SearchedEmployeeId = 147;
 
-                Employee searchedEmployee = db.Employees
-                    .Include(e => e.EmployeesProjects)
-                    .ThenInclude(ep => ep.Project)
-                    .SingleOrDefault(e => e.EmployeeId == SearchedEmployeeId);
+                var searchedEmployee = db.Employees
+                      .Select(e => new
+                      {
+                          e.EmployeeId,
+                          e.FirstName,
+                          e.LastName,
+                          e.JobTitle,
+                          Projects = e.EmployeesProjects.Select(ep => new
+                          {
+                              ep.Project.Name
+                          })
+                      })
+                      .SingleOrDefault(e => e.EmployeeId == SearchedEmployeeId);
 
                 if (searchedEmployee != null)
                 {
                     Console.WriteLine($"{searchedEmployee.FirstName} {searchedEmployee.LastName} - {searchedEmployee.JobTitle}");
 
-                    foreach (EmployeeProject employeeProject in searchedEmployee.EmployeesProjects.OrderBy(ep => ep.Project.Name))
+                    foreach (var project in searchedEmployee.Projects.OrderBy(ep => ep.Name))
                     {
-                        Console.WriteLine($"{employeeProject.Project.Name}");
+                        Console.WriteLine($"{project.Name}");
                     }
                 }
                 else

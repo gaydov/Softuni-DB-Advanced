@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using P02_DatabaseFirst.Data;
-using P02_DatabaseFirst.Data.Models;
 
 namespace EmployeesAndProjects
 {
@@ -18,27 +15,38 @@ namespace EmployeesAndProjects
 
             using (db)
             {
-                List<Employee> selectedEmployees = db.Employees
-                    .Include(e => e.Manager)
-                    .Include(e => e.EmployeesProjects)
-                    .ThenInclude(e => e.Project)
+                var selectedEmployees = db.Employees
                     .Where(e => e.EmployeesProjects.Any(ep => ep.Project.StartDate.Year >= 2001 && ep.Project.StartDate.Year <= 2003))
+                    .Select(e => new
+                    {
+                        e.FirstName,
+                        e.LastName,
+                        ManagerFirstName = e.Manager.FirstName,
+                        ManagerLastName = e.Manager.LastName,
+                        Projects = e.EmployeesProjects
+                            .Select(ep => new
+                            {
+                                ep.Project.Name,
+                                ep.Project.StartDate,
+                                ep.Project.EndDate
+                            })
+                    })
                     .Take(30)
                     .ToList();
 
-                foreach (Employee e in selectedEmployees)
+                foreach (var e in selectedEmployees)
                 {
-                    Console.WriteLine($"{e.FirstName} {e.LastName} - Manager: {e.Manager.FirstName} {e.Manager.LastName}");
+                    Console.WriteLine($"{e.FirstName} {e.LastName} - Manager: {e.ManagerFirstName} {e.ManagerLastName}");
 
-                    foreach (EmployeeProject ep in e.EmployeesProjects)
+                    foreach (var p in e.Projects)
                     {
-                        string projectName = ep.Project.Name;
-                        string startDate = ep.Project.StartDate.ToString(DateFormat, CultureInfo.InvariantCulture);
+                        string projectName = p.Name;
+                        string startDate = p.StartDate.ToString(DateFormat, CultureInfo.InvariantCulture);
                         string endDate;
 
-                        if (ep.Project.EndDate != null)
+                        if (p.EndDate != null)
                         {
-                            endDate = ep.Project.EndDate.Value.ToString(DateFormat, CultureInfo.InvariantCulture);
+                            endDate = p.EndDate.Value.ToString(DateFormat, CultureInfo.InvariantCulture);
                         }
                         else
                         {

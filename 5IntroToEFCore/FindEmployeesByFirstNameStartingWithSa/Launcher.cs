@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using P02_DatabaseFirst.Data;
-using P02_DatabaseFirst.Data.Models;
 
 namespace FindEmployeesByFirstNameStartingWithSa
 {

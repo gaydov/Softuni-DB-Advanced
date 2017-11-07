@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using P02_DatabaseFirst.Data;
-using P02_DatabaseFirst.Data.Models;
 
 namespace FindLatest10Projects
 {

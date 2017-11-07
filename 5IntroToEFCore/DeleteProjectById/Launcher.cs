@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using P02_DatabaseFirst.Data;
 using P02_DatabaseFirst.Data.Models;
 
@@ -15,30 +14,20 @@ namespace DeleteProjectById
 
             using (db)
             {
-                Project projectToBeDeleted = db.Projects.Find(2);
+                const int ProjectToBeDeletedId = 2;
 
-                List<Employee> employeesWorkingOnTheDeletedProject = db.Employees
-                    .Include(e => e.EmployeesProjects)
-                    .ThenInclude(ep => ep.Project)
-                    .ToList();
+                Project projectToBeDeleted = db.Projects.Find(ProjectToBeDeletedId);
+                List<EmployeeProject> employeeProjectsToBeDeleted = db.EmployeesProjects.Where(ep => ep.Project.ProjectId == ProjectToBeDeletedId).ToList();
 
-                foreach (Employee emp in employeesWorkingOnTheDeletedProject)
-                {
-                    foreach (EmployeeProject ep in emp.EmployeesProjects.ToList())
-                    {
-                        if (ep.Project.Equals(projectToBeDeleted))
-                        {
-                            emp.EmployeesProjects.Remove(ep);
-                        }
-                    }
-                }
-
-                db.Projects.Remove(projectToBeDeleted);
+                db.EmployeesProjects.RemoveRange(employeeProjectsToBeDeleted);
                 db.SaveChanges();
 
-                foreach (Project project in db.Projects.Take(10))
+                db.Remove(projectToBeDeleted);
+                db.SaveChanges();
+
+                foreach (string projectName in db.Projects.Select(p => p.Name).Take(10))
                 {
-                    Console.WriteLine(project.Name);
+                    Console.WriteLine(projectName);
                 }
             }
         }
