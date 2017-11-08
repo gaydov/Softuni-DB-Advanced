@@ -15,6 +15,7 @@ namespace AddressesByTown
                 var selectedAddresses = db.Addresses
                     .OrderByDescending(a => a.Employees.Count)
                     .ThenBy(a => a.Town.Name)
+                    .ThenBy(a => a.AddressText)
                     .Take(10)
                     .Select(a => new
                     {
