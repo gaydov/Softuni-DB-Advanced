@@ -5,9 +5,11 @@ VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P01_HospitalDatabase", "P01_HospitalDatabase\P01_HospitalDatabase.csproj", "{352C2DEB-A06F-49BF-985D-A2A84BE74374}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalDatabaseModification", "HospitalDatabaseModification\HospitalDatabaseModification.csproj", "{2B2D02EF-3489-40C7-9304-00C3E22661C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalDatabaseModification", "HospitalDatabaseModification\HospitalDatabaseModification.csproj", "{2B2D02EF-3489-40C7-9304-00C3E22661C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03_SalesDatabase", "P03_SalesDatabase\P03_SalesDatabase.csproj", "{88284655-8D66-4E73-97A1-CE2E1EDA5F00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03_SalesDatabase", "P03_SalesDatabase\P03_SalesDatabase.csproj", "{88284655-8D66-4E73-97A1-CE2E1EDA5F00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalDbExtended", "HospitalDbExtended\HospitalDbExtended.csproj", "{30279393-DE50-41B7-A5D2-4962F34F48E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{88284655-8D66-4E73-97A1-CE2E1EDA5F00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88284655-8D66-4E73-97A1-CE2E1EDA5F00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88284655-8D66-4E73-97A1-CE2E1EDA5F00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30279393-DE50-41B7-A5D2-4962F34F48E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30279393-DE50-41B7-A5D2-4962F34F48E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30279393-DE50-41B7-A5D2-4962F34F48E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30279393-DE50-41B7-A5D2-4962F34F48E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
