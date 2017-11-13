@@ -10,8 +10,8 @@ namespace HospitalDbExtended
             HospitalContext context = new HospitalContext();
             using (context)
             {
-                // context.Database.EnsureDeleted();
-                // context.Database.EnsureCreated();
+                context.Database.EnsureCreated();
+
                 Engine engine = new Engine(context);
                 engine.Run();
             }

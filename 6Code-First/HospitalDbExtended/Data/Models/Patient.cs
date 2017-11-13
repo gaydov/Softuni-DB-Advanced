@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace HospitalDbExtended.Data.Models
@@ -52,19 +53,22 @@ namespace HospitalDbExtended.Data.Models
                 hasInsurance = "Yes";
             }
 
-            sb.AppendLine($"ID: {this.PatientId}, Names: {this.FirstName} {this.LastName}, Address: {this.Address}, Email: {this.Email}, Insured: {hasInsurance}");
+            sb.AppendLine($"ID: {this.PatientId}, Names: \"{this.FirstName} {this.LastName}\", Address: \"{this.Address}\", Email: {this.Email}, Insured: {hasInsurance}");
+            sb.Append(Environment.NewLine);
 
             sb.AppendLine("    Visitations:");
             foreach (Visitation visitation in this.Visitations)
             {
                 sb.AppendLine($"    {visitation}");
             }
+            sb.Append(Environment.NewLine);
 
             sb.AppendLine("    Diagnoses:");
             foreach (Diagnose diagnosis in this.Diagnoses)
             {
                 sb.AppendLine($"    {diagnosis}");
             }
+            sb.Append(Environment.NewLine);
 
             sb.AppendLine("    Prescriptions:");
             foreach (PatientMedicament prescription in this.Prescriptions)

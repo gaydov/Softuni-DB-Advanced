@@ -9,10 +9,20 @@ namespace HospitalDbExtended.Data.Models
             this.Prescriptions = new List<PatientMedicament>();
         }
 
+        public Medicament(string name)
+        {
+            this.Name = name;
+        }
+
         public int MedicamentId { get; set; }
 
         public string Name { get; set; }
 
         public ICollection<PatientMedicament> Prescriptions { get; set; }
+
+        public override string ToString()
+        {
+            return $"\"{this.Name}\"";
+        }
     }
 }

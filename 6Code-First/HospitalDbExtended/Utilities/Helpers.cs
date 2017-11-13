@@ -12,7 +12,7 @@ namespace HospitalDbExtended.Utilities
 
             while (string.IsNullOrWhiteSpace(text))
             {
-                ConsoleWriter.WriteLine("No text entered. Please enter a valid text.");
+                ConsoleWriter.WriteLine(ErrorMessages.EmptyInputString);
                 ConsoleWriter.Write(Environment.NewLine);
                 ConsoleWriter.Write(promptMessage);
                 text = ConsoleReader.ReadLine();
@@ -57,7 +57,7 @@ namespace HospitalDbExtended.Utilities
             string enteredString = ConsoleReader.ReadLine();
             while (!enteredString.ToLower().Equals("y") && !enteredString.ToLower().Equals("n"))
             {
-                ConsoleWriter.WriteLine("Invalid input. Please enter \"Y\" or \"N\".");
+                ConsoleWriter.WriteLine(ErrorMessages.InvalidBoolInput);
                 ConsoleWriter.Write(Environment.NewLine);
                 ConsoleWriter.Write(promptMessage);
                 enteredString = ConsoleReader.ReadLine();
@@ -65,6 +65,20 @@ namespace HospitalDbExtended.Utilities
 
             bool result = enteredString.ToLower().Equals("y");
             return result;
+        }
+
+        public static int TryIntParseInputString(string promptMessage)
+        {
+            bool isEnteredValueInt = int.TryParse(IsNullOrEmptyValidator(promptMessage), out int patientId);
+
+            while (!isEnteredValueInt)
+            {
+                ConsoleWriter.Write(Environment.NewLine);
+                ConsoleWriter.WriteLine(ErrorMessages.InvalidIntegerInput);
+                isEnteredValueInt = int.TryParse(IsNullOrEmptyValidator(promptMessage), out patientId);
+            }
+
+            return patientId;
         }
     }
 }

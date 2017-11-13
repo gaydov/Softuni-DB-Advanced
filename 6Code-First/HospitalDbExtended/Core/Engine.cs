@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using HospitalDbExtended.Core.IO;
@@ -6,6 +7,7 @@ using HospitalDbExtended.Data;
 using HospitalDbExtended.Data.Models;
 using HospitalDbExtended.Utilities;
 using Microsoft.EntityFrameworkCore;
+using Remotion.Linq.Parsing.Structure.IntermediateModel;
 
 namespace HospitalDbExtended.Core
 {
@@ -23,15 +25,16 @@ namespace HospitalDbExtended.Core
 
         public void Run()
         {
-            this.LoginOrRegister();
+            this.RegisterOrLogin();
+            this.InterpretCommand();
         }
 
-        public void LoginOrRegister()
+        public void RegisterOrLogin()
         {
             while (this.isLogged == false)
             {
                 ConsoleWriter.Write(Environment.NewLine);
-                Console.Write("Do you want to login or register? ");
+                Console.Write(PromptingMessages.RegisterOrLogin);
                 string command = Console.ReadLine();
 
                 try
@@ -46,24 +49,28 @@ namespace HospitalDbExtended.Core
                             this.Login();
                             break;
 
+                        case "exit":
+                            this.Exit();
+                            break;
+
                         default:
-                            throw new ArgumentException(ErrorMessages.InvalidInput);
+                            throw new ArgumentException(ErrorMessages.InvalidCommand);
                     }
                 }
                 catch (Exception e)
                 {
+                    ConsoleWriter.Write(Environment.NewLine);
                     ConsoleWriter.WriteLine(e.Message);
                 }
             }
-
-            this.InterpretCommand();
         }
 
         private void InterpretCommand()
         {
-            while (this.isLogged == true)
+            while (this.isLogged)
             {
-                ConsoleWriter.Write("Please enter command(type \"help\" to list all commands): ");
+                ConsoleWriter.Write(Environment.NewLine);
+                ConsoleWriter.Write(PromptingMessages.PromptForCommand);
                 string command = Console.ReadLine();
                 ConsoleWriter.Write(Environment.NewLine);
 
@@ -77,6 +84,14 @@ namespace HospitalDbExtended.Core
 
                         case "add-patient":
                             this.AddPatient();
+                            break;
+
+                        case "find-patient-id":
+                            this.FindPatientById();
+                            break;
+
+                        case "find-patient-name":
+                            this.FindPatientByName();
                             break;
 
                         case "list-visitations":
@@ -94,12 +109,34 @@ namespace HospitalDbExtended.Core
                         case "add-diagnose":
                             this.AddDiagnose();
                             break;
+
+                        case "list-medicaments":
+                            this.ListMedicaments();
+                            break;
+
+                        case "add-medicament":
+                            this.AddMedicament();
+                            break;
+
+                        case "list-prescriptions":
+                            this.ListPrescriptions();
+                            break;
+
+                        case "add-prescription":
+                            this.AddPrescription();
+                            break;
+
+                        case "logoff":
+                            this.LogoffAndRedirectToEntryPoint();
+                            break;
+
+                        default:
+                            throw new ArgumentException(ErrorMessages.InvalidCommand);
                     }
                 }
                 catch (Exception e)
                 {
                     ConsoleWriter.WriteLine(e.Message);
-                    ConsoleWriter.Write(Environment.NewLine);
                 }
             }
         }
@@ -116,7 +153,7 @@ namespace HospitalDbExtended.Core
 
             if (this.context.Doctors.Any(d => d.Name.Equals(name) && d.Specialty.Equals(specialty)))
             {
-                throw new ArgumentNullException(ErrorMessages.DoctorAlreadyExists);
+                throw new ArgumentException(ErrorMessages.DoctorAlreadyExists);
             }
 
             Doctor doctor = new Doctor(name, specialty, username, password);
@@ -156,7 +193,17 @@ namespace HospitalDbExtended.Core
 
             ConsoleWriter.Write(Environment.NewLine);
             ConsoleWriter.WriteLine($"Welcome Dr. {doctor.Name} ({doctor.Specialty})!");
+        }
+
+        private void Exit()
+        {
             ConsoleWriter.Write(Environment.NewLine);
+            bool wasExitConfirmed = Helpers.ValidateBoolEntered(PromptingMessages.ExitConfirmation);
+
+            if (wasExitConfirmed)
+            {
+                Environment.Exit(0);
+            }
         }
 
         private void ListPatients()
@@ -168,55 +215,88 @@ namespace HospitalDbExtended.Core
                 .Where(p => p.Visitations.Any(v => v.DoctorId == this.loggedDoctorId))
                 .ToArray();
 
-            if (patients.Length == 0)
-            {
-                ConsoleWriter.WriteLine("You don't have any patients.");
-                ConsoleWriter.Write(Environment.NewLine);
-            }
-            else
-            {
-                ConsoleWriter.WriteLine("Your patients:");
-                ConsoleWriter.Write(Environment.NewLine);
-
-                foreach (Patient patient in patients)
-                {
-                    ConsoleWriter.WriteLine($"  {patient}");
-                }
-            }
+            this.PrintCollection(patients);
         }
 
         private void AddPatient()
         {
-            string firstName = Helpers.IsNullOrEmptyValidator("Patient first name: ");
-            string lastName = Helpers.IsNullOrEmptyValidator("Patient last name: ");
-            ConsoleWriter.Write("Patient address: ");
-            string address = ConsoleReader.ReadLine();
-            string email = Helpers.IsNullOrEmptyValidator("Patient email: ");
-            bool hasInsurance = Helpers.ValidateBoolEntered("Does the patient has insurance? (Y/N): ");
-
-            Patient patient = new Patient(firstName, lastName, address, email, hasInsurance);
+            Patient patient = this.ReadPatientInfoAndCreatePatient();
             this.context.Patients.Add(patient);
             this.context.SaveChanges();
 
-            bool shouldAddVisitations = Helpers.ValidateBoolEntered("Would you like to enter visitations for this patient? (Y/N): ");
+            bool shouldAddVisitations = Helpers.ValidateBoolEntered(string.Format(PromptingMessages.ShouldCollectionEntitiesBeAdded, "visitations"));
 
             while (shouldAddVisitations)
             {
                 this.AddVisitation(patient.PatientId);
                 ConsoleWriter.Write(Environment.NewLine);
-                shouldAddVisitations = Helpers.ValidateBoolEntered("Would you like to enter more visitations for this patient? (Y/N): ");
+                shouldAddVisitations = Helpers.ValidateBoolEntered(string.Format(PromptingMessages.ShouldMoreCollectionEntitiesBeAdded, "visitations"));
             }
 
-            bool shouldAddDiagnoses = Helpers.ValidateBoolEntered("Would you like to enter diagnoses for this patient? (Y/N): ");
+            bool shouldAddDiagnoses = Helpers.ValidateBoolEntered(string.Format(PromptingMessages.ShouldCollectionEntitiesBeAdded, "diagnoses"));
 
             while (shouldAddDiagnoses)
             {
                 this.AddDiagnose(patient.PatientId);
                 ConsoleWriter.Write(Environment.NewLine);
-                shouldAddDiagnoses = Helpers.ValidateBoolEntered("Would you like to enter more diagnoses for this patient? (Y/N): ");
+                shouldAddDiagnoses = Helpers.ValidateBoolEntered(string.Format(PromptingMessages.ShouldMoreCollectionEntitiesBeAdded, "diagnoses"));
             }
 
-            ConsoleWriter.WriteLine($"Successfully added patient {patient}.");
+            ConsoleWriter.WriteLine(string.Format(InfoMessages.SuccessfullyAddedEntity, nameof(patient), patient.ToString()));
+        }
+
+        private void FindPatientById()
+        {
+            Patient searchedPatient = this.TryFindPatientById();
+            ConsoleWriter.Write(Environment.NewLine);
+            ConsoleWriter.WriteLine(searchedPatient);
+        }
+
+        private void FindPatientByName()
+        {
+            Patient[] searchedPatients = this.TryFindPatientByName();
+            ConsoleWriter.Write(Environment.NewLine);
+
+            foreach (Patient searchedPatient in searchedPatients)
+            {
+                Console.WriteLine(searchedPatient);
+            }
+        }
+
+        private Patient[] TryFindPatientByName()
+        {
+            string firstName = Helpers.IsNullOrEmptyValidator("First name: ");
+            string lastName = Helpers.IsNullOrEmptyValidator("Last name: ");
+
+            Patient[] patients = this.context
+                .Patients
+                .Include(p => p.Visitations)
+                .ThenInclude(v => v.Doctor)
+                .Include(p => p.Diagnoses)
+                .Include(p => p.Prescriptions)
+                .ThenInclude(pr => pr.Medicament)
+                .Where(p => p.FirstName.ToLower() == firstName.ToLower() && p.LastName.ToLower() == lastName.ToLower() && p.Visitations.Any(v => v.Doctor.DoctorId == this.loggedDoctorId))
+                .ToArray();
+
+            if (patients == null)
+            {
+                throw new ArgumentException(string.Format(ErrorMessages.PatientWithNameNotFound, $"\"{firstName} {lastName}\""));
+            }
+
+            return patients;
+        }
+
+        private Patient ReadPatientInfoAndCreatePatient()
+        {
+            string firstName = Helpers.IsNullOrEmptyValidator($"{nameof(Patient)} first name: ");
+            string lastName = Helpers.IsNullOrEmptyValidator($"{nameof(Patient)} last name: ");
+            ConsoleWriter.Write($"{nameof(Patient)} address: ");
+            string address = ConsoleReader.ReadLine();
+            string email = Helpers.IsNullOrEmptyValidator($"{nameof(Patient)} email: ");
+            bool hasInsurance = Helpers.ValidateBoolEntered(string.Format(PromptingMessages.PatientHasInsurance, nameof(Patient).ToLower()));
+
+            Patient patient = new Patient(firstName, lastName, address, email, hasInsurance);
+            return patient;
         }
 
         private void ListVisitations()
@@ -228,21 +308,26 @@ namespace HospitalDbExtended.Core
                 .Visitations
                 .ToArray();
 
-            ConsoleWriter.Write(Environment.NewLine);
+            this.PrintCollection(visitations);
+        }
 
-            if (visitations.Length == 0)
+        private void PrintCollection<T>(T[] entities)
+        {
+            string collectionName = typeof(T).Name.ToLower() + "s";
+
+            if (entities.Length == 0)
             {
-                ConsoleWriter.WriteLine("You have no visitations.");
+                ConsoleWriter.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionEmpty, collectionName));
                 ConsoleWriter.Write(Environment.NewLine);
             }
             else
             {
-                ConsoleWriter.WriteLine("Your visitations:");
+                ConsoleWriter.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionIndicator, collectionName));
                 ConsoleWriter.Write(Environment.NewLine);
 
-                foreach (Visitation visitation in visitations)
+                foreach (T entity in entities)
                 {
-                    ConsoleWriter.WriteLine($"  {visitation}");
+                    ConsoleWriter.WriteLine($"  {entity}");
                 }
 
                 ConsoleWriter.Write(Environment.NewLine);
@@ -251,29 +336,14 @@ namespace HospitalDbExtended.Core
 
         private void AddVisitation()
         {
-            bool canBeParsed = int.TryParse(Helpers.IsNullOrEmptyValidator("Patient ID: "), out int patientId);
-            while (!canBeParsed)
-            {
-                ConsoleWriter.WriteLine(Environment.NewLine);
-                ConsoleWriter.WriteLine("Invalid input. Please enter an integer number.");
-                canBeParsed = int.TryParse(Helpers.IsNullOrEmptyValidator("Patient ID: "), out patientId);
-            }
+            int patientId = Helpers.TryIntParseInputString("Patient ID: ");
 
             this.AddVisitation(patientId);
         }
 
         private void AddVisitation(int patientId)
         {
-            string dateStr = Helpers.IsNullOrEmptyValidator("Visitation date (format DD/MM/YYYY HH:MM): ");
-            bool canBeParsed = DateTime.TryParseExact(dateStr, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None, out DateTime date);
-
-            while (!canBeParsed)
-            {
-                ConsoleWriter.Write(Environment.NewLine);
-                ConsoleWriter.WriteLine("Invalid input. Please enter date in the format DD/MM/YYYY HH:MM.");
-                dateStr = Helpers.IsNullOrEmptyValidator("Visitation date (format DD/MM/YYYY HH:MM): ");
-                canBeParsed = DateTime.TryParseExact(dateStr, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None, out date);
-            }
+            DateTime date = this.TryParseDateInCertainFormat("dd/MM/yyyy HH:mm");
 
             ConsoleWriter.Write("Comments: ");
             string comments = ConsoleReader.ReadLine();
@@ -284,7 +354,25 @@ namespace HospitalDbExtended.Core
             this.context.Visitations.Add(visitation);
             this.context.SaveChanges();
 
-            ConsoleWriter.WriteLine($"Visitation with date {date:dd/MM/yyyy HH:mm} for {currentPatient.FirstName} {currentPatient.LastName} was added.");
+            ConsoleWriter.WriteLine(string.Format(InfoMessages.SuccessfullyAddedVisitation, visitation.Date, visitation.Patient.FirstName, visitation.Patient.LastName));
+        }
+
+        private DateTime TryParseDateInCertainFormat(string format)
+        {
+            string dateString = Helpers.IsNullOrEmptyValidator(PromptingMessages.VisitationDate);
+            bool isEnteredValueDatetime = DateTime.TryParseExact(dateString, format, null, DateTimeStyles.None,
+                out DateTime date);
+
+            while (!isEnteredValueDatetime)
+            {
+                ConsoleWriter.Write(Environment.NewLine);
+                ConsoleWriter.WriteLine(string.Format(ErrorMessages.InvalidFormattedDateInput, format));
+                dateString = Helpers.IsNullOrEmptyValidator(PromptingMessages.VisitationDate);
+                isEnteredValueDatetime = DateTime.TryParseExact(dateString, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None,
+                    out date);
+            }
+
+            return date;
         }
 
         private void ListDiagnoses()
@@ -297,21 +385,35 @@ namespace HospitalDbExtended.Core
                 .Where(p => p.Visitations.Any(v => v.DoctorId == this.loggedDoctorId))
                 .ToArray();
 
-            if (!patients.Any())
+            if (patients.Length == 0)
             {
-                ConsoleWriter.WriteLine("You don't have any diagnoses.");
+                ConsoleWriter.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionEmpty, "diagnoses"));
                 ConsoleWriter.Write(Environment.NewLine);
             }
             else
             {
-                ConsoleWriter.WriteLine("Your diagnoses:");
-                ConsoleWriter.Write(Environment.NewLine);
+                IList<Diagnose> diagnoses = new List<Diagnose>();
 
                 foreach (Patient patient in patients)
                 {
-                    foreach (var diag in patient.Diagnoses)
+                    foreach (Diagnose diagnose in patient.Diagnoses)
                     {
-                        Console.WriteLine(diag);
+                        diagnoses.Add(diagnose);
+                    }
+                }
+
+                if (diagnoses.Count == 0)
+                {
+                    ConsoleWriter.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionEmpty, "diagnoses"));
+                }
+                else
+                {
+                    ConsoleWriter.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionIndicator, "diagnoses"));
+                    ConsoleWriter.Write(Environment.NewLine);
+
+                    foreach (Diagnose diagnose in diagnoses)
+                    {
+                        Console.WriteLine(diagnose);
                     }
                 }
 
@@ -321,13 +423,7 @@ namespace HospitalDbExtended.Core
 
         private void AddDiagnose()
         {
-            bool canBeParsed = int.TryParse(Helpers.IsNullOrEmptyValidator("Patient ID: "), out int patientId);
-            while (!canBeParsed)
-            {
-                ConsoleWriter.WriteLine(Environment.NewLine);
-                ConsoleWriter.WriteLine("Invalid input. Please enter an integer number.");
-                canBeParsed = int.TryParse(Helpers.IsNullOrEmptyValidator("Patient ID: "), out patientId);
-            }
+            int patientId = Helpers.TryIntParseInputString("Patient ID: ");
 
             this.AddDiagnose(patientId);
         }
@@ -342,13 +438,15 @@ namespace HospitalDbExtended.Core
 
             if (currentPatient == null)
             {
-                ConsoleWriter.WriteLine(string.Format(ErrorMessages.PatientNotFound, patientId));
+                ConsoleWriter.WriteLine(string.Format(ErrorMessages.PatientWithIdNotFound, patientId));
                 return;
             }
 
             if (!currentPatient.Visitations.Any(v => v.DoctorId == this.loggedDoctorId))
             {
-                ConsoleWriter.WriteLine(ErrorMessages.PatientDoesNotHaveVisitations);
+                ConsoleWriter.Write(Environment.NewLine);
+                ConsoleWriter.WriteLine(string.Format(ErrorMessages.PatientDoesNotHaveVisitations, "diagnose"));
+                ConsoleWriter.Write(Environment.NewLine);
                 return;
             }
 
@@ -359,7 +457,166 @@ namespace HospitalDbExtended.Core
             this.context.Diagnoses.Add(currentDiagnose);
             this.context.SaveChanges();
 
-            ConsoleWriter.WriteLine($"Diagnose with name {diagnoseName} was added for \"{currentPatient.FirstName} {currentPatient.LastName}\".");
+            ConsoleWriter.WriteLine(string.Format(InfoMessages.SuccessFullyAddedDiagnose, currentDiagnose.Name, currentPatient.FirstName, currentPatient.LastName));
+        }
+
+        private void ListMedicaments()
+        {
+            Medicament[] medicaments = this.context.Medicaments
+                .Include(m => m.Prescriptions)
+                .ToArray();
+
+            if (medicaments.Length == 0)
+            {
+                ConsoleWriter.WriteLine("There are no medicaments.");
+                ConsoleWriter.Write(Environment.NewLine);
+            }
+            else
+            {
+                foreach (Medicament medicament in medicaments)
+                {
+                    ConsoleWriter.WriteLine($"  {medicament}");
+                }
+
+                ConsoleWriter.Write(Environment.NewLine);
+            }
+        }
+
+        private void AddMedicament()
+        {
+            string medicamentName = Helpers.IsNullOrEmptyValidator("Medicament name: ");
+            Medicament medicament = new Medicament(medicamentName);
+            this.context.Medicaments.Add(medicament);
+            this.context.SaveChanges();
+
+            ConsoleWriter.WriteLine($"Medicament with name \"{medicament.Name}\" was added successfully.");
+            ConsoleWriter.Write(Environment.NewLine);
+        }
+
+        private void ListPrescriptions()
+        {
+            Patient[] patients = this.context
+                .Patients
+                .Include(p => p.Visitations)
+                .Include(p => p.Prescriptions)
+                .ThenInclude(pr => pr.Medicament)
+                .Where(p => p.Visitations.Any(v => v.DoctorId == this.loggedDoctorId))
+                .ToArray();
+
+            if (patients.Length == 0)
+            {
+                ConsoleWriter.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionEmpty, "prescriptions"));
+                ConsoleWriter.Write(Environment.NewLine);
+            }
+            else
+            {
+                IList<PatientMedicament> prescriptions = new List<PatientMedicament>();   
+
+                foreach (Patient patient in patients)
+                {
+                    foreach (PatientMedicament prescription in patient.Prescriptions)
+                    {
+                       prescriptions.Add(prescription);
+                    }
+                }
+
+                // this.PrintCollection(prescriptions.ToArray());
+                if (prescriptions.Count == 0)
+                {
+                    ConsoleWriter.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionEmpty, "prescriptions"));
+                    ConsoleWriter.Write(Environment.NewLine);
+                }
+                else
+                {
+                    ConsoleWriter.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionIndicator, "prescriptions"));
+                    ConsoleWriter.Write(Environment.NewLine);
+
+                    foreach (PatientMedicament prescription in prescriptions)
+                    {
+                        Console.WriteLine(prescription);
+                    }
+                }
+            }
+        }
+
+        private Patient TryFindPatientById()
+        {
+            int patientId = Helpers.TryIntParseInputString("Patient ID: ");
+
+            Patient currentPatient = this.context
+                .Patients
+                .Include(p => p.Visitations)
+                .ThenInclude(v => v.Doctor)
+                .Include(p => p.Diagnoses)
+                .Include(p => p.Prescriptions)
+                .ThenInclude(pr => pr.Medicament)
+                .FirstOrDefault(p => p.PatientId == patientId && p.Visitations.Any(v => v.Doctor.DoctorId == this.loggedDoctorId));
+
+            if (currentPatient == null)
+            {
+                throw new ArgumentException(string.Format(ErrorMessages.PatientWithIdNotFound, patientId));
+            }
+
+            return currentPatient;
+        }
+
+        private Medicament TryFindMedicamentByName()
+        {
+            string medicamentName = Helpers.IsNullOrEmptyValidator("Medicament name: ");
+            Medicament currentMedicament = this.context.Medicaments.FirstOrDefault(f => f.Name.Equals(medicamentName));
+
+            if (currentMedicament == null)
+            {
+                throw new ArgumentNullException(string.Format(ErrorMessages.MedicamentNotFound, medicamentName));
+            }
+
+            return currentMedicament;
+        }
+
+        private PatientMedicament TryCreatePrescription(Patient patient, Medicament medicament)
+        {
+            if (this.context.Prescriptions.Any(p => p.Patient.PatientId == patient.PatientId && p.Medicament.MedicamentId == medicament.MedicamentId))
+            {
+                throw new InvalidOperationException(string.Format(ErrorMessages.PrescriptionAlreadyExists, medicament.Name, patient.FirstName, patient.LastName));
+            }
+
+            PatientMedicament prescription = new PatientMedicament(patient, medicament);
+            return prescription;
+        }
+
+        private void AddPrescription()
+        {
+            Patient currentPatient = this.TryFindPatientById();
+
+            if (!currentPatient.Visitations.Any(v => v.DoctorId == this.loggedDoctorId))
+            {
+                ConsoleWriter.Write(Environment.NewLine);
+                ConsoleWriter.WriteLine(string.Format(ErrorMessages.PatientDoesNotHaveVisitations, "prescription"));
+                ConsoleWriter.Write(Environment.NewLine);
+                return;
+            }
+
+            Medicament currentMedicament = this.TryFindMedicamentByName();
+
+            PatientMedicament prescription = this.TryCreatePrescription(currentPatient, currentMedicament);
+
+            this.context.Prescriptions.Add(prescription);
+            this.context.SaveChanges();
+
+            ConsoleWriter.Write(Environment.NewLine);
+            ConsoleWriter.WriteLine(string.Format(InfoMessages.SuccessfullyPrescribedMedication, currentMedicament.Name, currentPatient.FirstName, currentPatient.LastName));
+            ConsoleWriter.Write(Environment.NewLine);
+        }
+
+        private void LogoffAndRedirectToEntryPoint()
+        {
+            bool wasLogoffConfirmed = Helpers.ValidateBoolEntered(PromptingMessages.LogoffConfirmation);
+
+            if (wasLogoffConfirmed)
+            {
+                this.isLogged = false;
+                this.Run();
+            }
         }
     }
 }
