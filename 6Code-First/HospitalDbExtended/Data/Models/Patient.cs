@@ -61,6 +61,7 @@ namespace HospitalDbExtended.Data.Models
             {
                 sb.AppendLine($"    {visitation}");
             }
+
             sb.Append(Environment.NewLine);
 
             sb.AppendLine("    Diagnoses:");
@@ -68,6 +69,7 @@ namespace HospitalDbExtended.Data.Models
             {
                 sb.AppendLine($"    {diagnosis}");
             }
+
             sb.Append(Environment.NewLine);
 
             sb.AppendLine("    Prescriptions:");

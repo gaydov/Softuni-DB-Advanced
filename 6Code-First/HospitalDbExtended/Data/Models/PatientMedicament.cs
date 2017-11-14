@@ -22,7 +22,7 @@
 
         public override string ToString()
         {
-            return $"\"{this.Patient.FirstName} {this.Patient.LastName}\" - \"{this.Medicament.Name}\"";
+            return $"Patient \"{this.Patient.FirstName} {this.Patient.LastName}\" - \"{this.Medicament.Name}\"";
         }
     }
 }

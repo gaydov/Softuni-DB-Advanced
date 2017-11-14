@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using HospitalDbExtended.Core.IO;
 
 namespace HospitalDbExtended.Utilities
@@ -21,7 +22,7 @@ namespace HospitalDbExtended.Utilities
             return text;
         }
 
-        public static string EnterHiddenPassword()
+        public static string EnterPasswordHidden()
         {
             string password = string.Empty;
 
@@ -55,6 +56,7 @@ namespace HospitalDbExtended.Utilities
         {
             ConsoleWriter.Write(promptMessage);
             string enteredString = ConsoleReader.ReadLine();
+
             while (!enteredString.ToLower().Equals("y") && !enteredString.ToLower().Equals("n"))
             {
                 ConsoleWriter.WriteLine(ErrorMessages.InvalidBoolInput);
@@ -79,6 +81,44 @@ namespace HospitalDbExtended.Utilities
             }
 
             return patientId;
+        }
+
+        public static void PrintCollection<T>(T[] entities)
+        {
+            string collectionName = typeof(T).Name.ToLower() + "s";
+
+            if (entities.Length == 0)
+            {
+                ConsoleWriter.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionEmpty, collectionName));
+                ConsoleWriter.Write(Environment.NewLine);
+            }
+            else
+            {
+                ConsoleWriter.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionIndicator, collectionName));
+                ConsoleWriter.Write(Environment.NewLine);
+
+                foreach (T entity in entities)
+                {
+                    ConsoleWriter.WriteLine($"  {entity}");
+                }
+            }
+        }
+
+        public static DateTime TryParseDateInCertainFormat(string format)
+        {
+            string dateString = IsNullOrEmptyValidator(PromptingMessages.VisitationDate);
+            bool isEnteredValueDatetime = DateTime.TryParseExact(dateString, format, null, DateTimeStyles.None,
+                out DateTime date);
+
+            while (!isEnteredValueDatetime)
+            {
+                ConsoleWriter.Write(Environment.NewLine);
+                ConsoleWriter.WriteLine(string.Format(ErrorMessages.InvalidFormattedDateInput, format));
+                dateString = IsNullOrEmptyValidator(PromptingMessages.VisitationDate);
+                isEnteredValueDatetime = DateTime.TryParseExact(dateString, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None, out date);
+            }
+
+            return date;
         }
     }
 }

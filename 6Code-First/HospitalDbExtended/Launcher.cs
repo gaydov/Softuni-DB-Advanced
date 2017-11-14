@@ -8,6 +8,7 @@ namespace HospitalDbExtended
         public static void Main()
         {
             HospitalContext context = new HospitalContext();
+
             using (context)
             {
                 context.Database.EnsureCreated();

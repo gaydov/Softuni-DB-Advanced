@@ -2,7 +2,7 @@
 {
     public static class ErrorMessages
     {
-        public const string DoctorAlreadyExists = "A doctor with these name and specialty already exists.";
+        public const string UsernameAlreadyExists = "Username \"{0}\" already exists. Please choose another username.";
         public const string InvalidCredentials = "Invalid credentials.";
         public const string InvalidCommand = "Invalid command. Please try again.";
         public const string PatientWithIdNotFound = "No patient of yours with ID {0} was found.";

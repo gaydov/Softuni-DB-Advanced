@@ -19,7 +19,7 @@ namespace HospitalDbExtended.Core.IO
         {
             WriteLine(textLine);
         }
-        
+
         void IWriter.Write(string text)
         {
             Write(text);

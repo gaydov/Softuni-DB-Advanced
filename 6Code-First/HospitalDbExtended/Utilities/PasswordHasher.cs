@@ -4,17 +4,14 @@ using System.Text;
 
 namespace HospitalDbExtended.Utilities
 {
-    public static class Authenticate
+    public static class PasswordHasher
     {
         public static string GetHash(string password)
         {
-            // SHA256 is disposable by inheritance.  
             using (SHA256 sha256 = SHA256.Create())
             {
-                // Send a sample password to hash.  
                 byte[] hashedBytes = sha256.ComputeHash(Encoding.Unicode.GetBytes(password));
-
-                // Get the hashed string.  
+ 
                 return BitConverter.ToString(hashedBytes).Replace("-", string.Empty).ToLower();
             }
         }
