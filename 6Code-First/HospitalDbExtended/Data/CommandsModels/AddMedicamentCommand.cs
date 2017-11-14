@@ -20,7 +20,6 @@ namespace HospitalDbExtended.Data.CommandsModels
             this.Context.SaveChanges();
 
             this.Writer.WriteLine($"Medicament with name \"{medicament.Name}\" was added successfully.");
-            this.Writer.Write(Environment.NewLine);
         }
     }
 }

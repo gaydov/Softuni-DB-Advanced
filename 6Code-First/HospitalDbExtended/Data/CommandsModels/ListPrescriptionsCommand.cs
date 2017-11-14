@@ -53,6 +53,7 @@ namespace HospitalDbExtended.Data.CommandsModels
                     foreach (PatientMedicament prescription in prescriptions)
                     {
                         this.Writer.WriteLine(prescription.ToString());
+                        this.Writer.Write(Environment.NewLine);
                     }
                 }
             }

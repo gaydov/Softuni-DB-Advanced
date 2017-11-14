@@ -34,7 +34,7 @@ namespace HospitalDbExtended.Data.Models
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append($"{this.Date} - Patient: \"{this.Patient.FirstName} {this.Patient.LastName}\", Comments: ");
+            sb.Append($"   {this.Date} - Patient: \"{this.Patient.FirstName} {this.Patient.LastName}\", Comments: ");
 
             if (string.IsNullOrWhiteSpace(this.Comments))
             {

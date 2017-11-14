@@ -53,7 +53,7 @@ namespace HospitalDbExtended.Data.Models
                 hasInsuranceStr = "Yes";
             }
 
-            sb.AppendLine($"ID: {this.PatientId}, Names: \"{this.FirstName} {this.LastName}\", Address: \"{this.Address}\", Email: {this.Email}, Insured: {hasInsuranceStr}");
+            sb.AppendLine($"   ID: {this.PatientId}, Names: \"{this.FirstName} {this.LastName}\", Address: \"{this.Address}\", Email: {this.Email}, Insured: {hasInsuranceStr}");
             sb.Append(Environment.NewLine);
 
             sb.AppendLine("    Visitations:");

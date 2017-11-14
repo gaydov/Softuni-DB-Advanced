@@ -99,7 +99,7 @@ namespace HospitalDbExtended.Utilities
 
                 foreach (T item in items)
                 {
-                    ConsoleWriter.WriteLine($"  {item}");
+                    ConsoleWriter.WriteLine($"{item}");
                     ConsoleWriter.Write(Environment.NewLine);
                 }
             }

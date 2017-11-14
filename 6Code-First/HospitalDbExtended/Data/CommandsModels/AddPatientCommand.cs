@@ -39,7 +39,9 @@ namespace HospitalDbExtended.Data.CommandsModels
                 shouldAddDiagnoses = Helpers.ValidateBoolEntered(string.Format(PromptingMessages.ShouldMoreCollectionEntitiesBeAdded, "diagnoses"));
             }
 
-            this.Writer.WriteLine(string.Format(InfoMessages.SuccessfullyAddedEntity, nameof(patient), patient.ToString()));
+            this.Writer.WriteLine(string.Format(InfoMessages.SuccessfullyAddedPatient));
+            this.Writer.Write(Environment.NewLine);
+            this.Writer.WriteLine(patient.ToString());
         }
 
         private Patient ReadPatientInfoAndCreatePatient()

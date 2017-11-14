@@ -30,6 +30,7 @@ namespace HospitalDbExtended.Data.CommandsModels
                 foreach (Medicament medicament in medicaments)
                 {
                     this.Writer.WriteLine($"  {medicament}");
+                    this.Writer.Write(Environment.NewLine);
                 }
             }
         }

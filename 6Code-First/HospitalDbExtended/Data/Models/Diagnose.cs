@@ -25,7 +25,7 @@
 
         public override string ToString()
         {
-            return $"{this.Name} - {this.Comments} for patient \"{this.Patient.FirstName} {this.Patient.LastName}\".";
+            return $"   {this.Name} - {this.Comments} for patient \"{this.Patient.FirstName} {this.Patient.LastName}\".";
         }
     }
 }

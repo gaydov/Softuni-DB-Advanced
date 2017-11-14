@@ -54,6 +54,7 @@ namespace HospitalDbExtended.Data.CommandsModels
                     foreach (Diagnose diagnose in diagnoses)
                     {
                         this.Writer.WriteLine(diagnose.ToString());
+                        this.Writer.Write(Environment.NewLine);
                     }
                 }
             }
