@@ -9,8 +9,8 @@ namespace HospitalDbExtended.Data.CommandsModels
 {
     public class AddDiagnoseCommand : Command
     {
-        public AddDiagnoseCommand(HospitalContext context, bool isLogged, int loggedDoctorId, IReader reader, IWriter writer)
-            : base(context, isLogged, loggedDoctorId, reader, writer)
+        public AddDiagnoseCommand(HospitalContext context, bool isUserLogged, int loggedDoctorId, IReader reader, IWriter writer)
+            : base(context, isUserLogged, loggedDoctorId, reader, writer)
         {
         }
 
@@ -23,22 +23,22 @@ namespace HospitalDbExtended.Data.CommandsModels
 
         public void AddDiagnose(int patientId)
         {
-            Patient currentPatient = this.Context
+            Patient patient = this.Context
                 .Patients
                 .Include(p => p.Visitations)
                 .ThenInclude(v => v.Doctor)
                 .FirstOrDefault(p => p.PatientId == patientId);
 
-            if (currentPatient == null)
+            if (patient == null)
             {
                 this.Writer.WriteLine(string.Format(ErrorMessages.PatientWithIdNotFound, patientId));
                 return;
             }
 
-            if (!currentPatient.Visitations.Any(v => v.DoctorId == this.LoggedDoctorId))
+            if (!patient.Visitations.Any(v => v.DoctorId == this.LoggedDoctorId))
             {
                 this.Writer.Write(Environment.NewLine);
-                this.Writer.WriteLine(string.Format(ErrorMessages.PatientDoesNotHaveVisitations, "diagnose"));
+                this.Writer.WriteLine(string.Format(ErrorMessages.PatientNotVisitedByThisDoctor, "diagnose"));
                 this.Writer.Write(Environment.NewLine);
                 return;
             }
@@ -46,11 +46,11 @@ namespace HospitalDbExtended.Data.CommandsModels
             string diagnoseName = Helpers.IsNullOrEmptyValidator("Diagnose name: ");
             string diagnoseComments = Helpers.IsNullOrEmptyValidator("Diagnose comments: ");
 
-            Diagnose currentDiagnose = new Diagnose(diagnoseName, diagnoseComments, currentPatient);
-            this.Context.Diagnoses.Add(currentDiagnose);
+            Diagnose diagnose = new Diagnose(diagnoseName, diagnoseComments, patient);
+            this.Context.Diagnoses.Add(diagnose);
             this.Context.SaveChanges();
 
-            this.Writer.WriteLine(string.Format(InfoMessages.SuccessFullyAddedDiagnose, currentDiagnose.Name, currentPatient.FirstName, currentPatient.LastName));
+            this.Writer.WriteLine(string.Format(InfoMessages.SuccessfullyAddedDiagnose, diagnose.Name, patient.FirstName, patient.LastName));
         }
     }
 }

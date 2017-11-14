@@ -8,8 +8,8 @@ namespace HospitalDbExtended.Data.CommandsModels
 {
     public class ListPatientsCommand : Command
     {
-        public ListPatientsCommand(HospitalContext context, bool isLogged, int loggedDoctorId, IReader reader, IWriter writer)
-            : base(context, isLogged, loggedDoctorId, reader, writer)
+        public ListPatientsCommand(HospitalContext context, bool isUserLogged, int loggedDoctorId, IReader reader, IWriter writer)
+            : base(context, isUserLogged, loggedDoctorId, reader, writer)
         {
         }
 
@@ -19,6 +19,9 @@ namespace HospitalDbExtended.Data.CommandsModels
                 .Patients
                 .Include(p => p.Visitations)
                 .ThenInclude(v => v.Doctor)
+                .Include(p => p.Diagnoses)
+                .Include(p => p.Prescriptions)
+                .ThenInclude(pr => pr.Medicament)
                 .Where(p => p.Visitations.Any(v => v.DoctorId == this.LoggedDoctorId))
                 .ToArray();
 

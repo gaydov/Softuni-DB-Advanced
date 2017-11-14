@@ -9,17 +9,17 @@ namespace HospitalDbExtended.Utilities
         public static string IsNullOrEmptyValidator(string promptMessage)
         {
             ConsoleWriter.Write(promptMessage);
-            string text = ConsoleReader.ReadLine();
+            string inputString = ConsoleReader.ReadLine();
 
-            while (string.IsNullOrWhiteSpace(text))
+            while (string.IsNullOrWhiteSpace(inputString))
             {
                 ConsoleWriter.WriteLine(ErrorMessages.EmptyInputString);
                 ConsoleWriter.Write(Environment.NewLine);
                 ConsoleWriter.Write(promptMessage);
-                text = ConsoleReader.ReadLine();
+                inputString = ConsoleReader.ReadLine();
             }
 
-            return text;
+            return inputString;
         }
 
         public static string EnterPasswordHidden()
@@ -55,41 +55,41 @@ namespace HospitalDbExtended.Utilities
         public static bool ValidateBoolEntered(string promptMessage)
         {
             ConsoleWriter.Write(promptMessage);
-            string enteredString = ConsoleReader.ReadLine();
+            string inputString = ConsoleReader.ReadLine();
 
-            while (!enteredString.ToLower().Equals("y") && !enteredString.ToLower().Equals("n"))
+            while (!inputString.ToLower().Equals("y") && !inputString.ToLower().Equals("n"))
             {
                 ConsoleWriter.WriteLine(ErrorMessages.InvalidBoolInput);
                 ConsoleWriter.Write(Environment.NewLine);
                 ConsoleWriter.Write(promptMessage);
-                enteredString = ConsoleReader.ReadLine();
+                inputString = ConsoleReader.ReadLine();
             }
 
-            bool result = enteredString.ToLower().Equals("y");
+            bool result = inputString.ToLower().Equals("y");
             return result;
         }
 
         public static int TryIntParseInputString(string promptMessage)
         {
-            bool isEnteredValueInt = int.TryParse(IsNullOrEmptyValidator(promptMessage), out int patientId);
+            bool isEnteredValueInt = int.TryParse(IsNullOrEmptyValidator(promptMessage), out int intResult);
 
             while (!isEnteredValueInt)
             {
                 ConsoleWriter.Write(Environment.NewLine);
                 ConsoleWriter.WriteLine(ErrorMessages.InvalidIntegerInput);
-                isEnteredValueInt = int.TryParse(IsNullOrEmptyValidator(promptMessage), out patientId);
+                isEnteredValueInt = int.TryParse(IsNullOrEmptyValidator(promptMessage), out intResult);
             }
 
-            return patientId;
+            return intResult;
         }
 
-        public static void PrintCollection<T>(T[] entities)
+        public static void PrintCollection<T>(T[] items)
         {
             string collectionName = typeof(T).Name.ToLower() + "s";
 
-            if (entities.Length == 0)
+            if (items.Length == 0)
             {
-                ConsoleWriter.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionEmpty, collectionName));
+                ConsoleWriter.WriteLine(string.Format(InfoMessages.ExtractedDoctorCollectionEmpty, collectionName));
                 ConsoleWriter.Write(Environment.NewLine);
             }
             else
@@ -97,9 +97,10 @@ namespace HospitalDbExtended.Utilities
                 ConsoleWriter.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionIndicator, collectionName));
                 ConsoleWriter.Write(Environment.NewLine);
 
-                foreach (T entity in entities)
+                foreach (T item in items)
                 {
-                    ConsoleWriter.WriteLine($"  {entity}");
+                    ConsoleWriter.WriteLine($"  {item}");
+                    ConsoleWriter.Write(Environment.NewLine);
                 }
             }
         }

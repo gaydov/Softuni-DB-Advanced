@@ -2,14 +2,15 @@
 using System.Linq;
 using HospitalDbExtended.Data.Interfaces;
 using HospitalDbExtended.Data.Models;
+using HospitalDbExtended.Utilities;
 using Microsoft.EntityFrameworkCore;
 
 namespace HospitalDbExtended.Data.CommandsModels
 {
     public class ListMedicamentsCommand : Command
     {
-        public ListMedicamentsCommand(HospitalContext context, bool isLogged, int loggedDoctorId, IReader reader, IWriter writer)
-            : base(context, isLogged, loggedDoctorId, reader, writer)
+        public ListMedicamentsCommand(HospitalContext context, bool isUserLogged, int loggedDoctorId, IReader reader, IWriter writer)
+            : base(context, isUserLogged, loggedDoctorId, reader, writer)
         {
         }
 
@@ -21,7 +22,7 @@ namespace HospitalDbExtended.Data.CommandsModels
 
             if (medicaments.Length == 0)
             {
-                this.Writer.WriteLine("There are no medicaments.");
+                this.Writer.WriteLine(string.Format(InfoMessages.ExtractedCollectionEmpty, nameof(medicaments)));
                 this.Writer.Write(Environment.NewLine);
             }
             else
@@ -30,8 +31,6 @@ namespace HospitalDbExtended.Data.CommandsModels
                 {
                     this.Writer.WriteLine($"  {medicament}");
                 }
-
-                this.Writer.Write(Environment.NewLine);
             }
         }
     }

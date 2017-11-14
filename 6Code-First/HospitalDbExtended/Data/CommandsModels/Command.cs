@@ -7,23 +7,23 @@ namespace HospitalDbExtended.Data.CommandsModels
         private readonly IReader reader;
         private readonly IWriter writer;
         private readonly HospitalContext context;
-        private bool isLogged;
+        private bool isUserLogged;
         private int loggedDoctorId;
 
-        protected Command(HospitalContext context, bool isLogged, int loggedDoctorId, IReader reader, IWriter writer)
+        protected Command(HospitalContext context, bool isUserLogged, int loggedDoctorId, IReader reader, IWriter writer)
         {
             this.context = context;
-            this.IsLogged = isLogged;
+            this.IsUserLogged = isUserLogged;
             this.LoggedDoctorId = loggedDoctorId;
             this.reader = reader;
             this.writer = writer;
         }
 
-        public bool IsLogged
+        public bool IsUserLogged
         {
-            get { return this.isLogged; }
+            get { return this.isUserLogged; }
 
-            set { this.isLogged = value; }
+            set { this.isUserLogged = value; }
         }
 
         public int LoggedDoctorId

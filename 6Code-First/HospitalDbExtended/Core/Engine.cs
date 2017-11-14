@@ -13,26 +13,26 @@ namespace HospitalDbExtended.Core
         private readonly IReader reader;
         private readonly IWriter writer;
         private readonly HospitalContext context;
-        private bool isLogged;
+        private bool isUserLogged;
         private int loggedDoctorId;
 
         public Engine(HospitalContext context)
         {
-            this.context = context;
-            this.isLogged = false;
             this.reader = new ConsoleReader();
             this.writer = new ConsoleWriter();
+            this.context = context;
+            this.isUserLogged = false;
         }
 
         public void Run()
         {
-            this.RegisterOrLogin();
+            this.StartSession();
             this.InterpretCommand();
         }
 
-        private void RegisterOrLogin()
+        private void StartSession()
         {
-            while (this.isLogged == false)
+            while (this.isUserLogged == false)
             {
                 this.writer.Write(Environment.NewLine);
                 this.writer.Write(PromptingMessages.RegisterOrLogin);
@@ -51,7 +51,7 @@ namespace HospitalDbExtended.Core
 
         private void InterpretCommand()
         {
-            while (this.isLogged)
+            while (this.isUserLogged)
             {
                 Type[] allowedCommands =
                 {
@@ -87,8 +87,8 @@ namespace HospitalDbExtended.Core
                 string command = Console.ReadLine();
                 this.writer.Write(Environment.NewLine);
 
-                CommandGenerator cmdInterpreter = new CommandGenerator();
-                Command cmd = cmdInterpreter.GenerateCommand(command, this.context, this.isLogged, this.loggedDoctorId,
+                CommandGenerator cmdGenerator = new CommandGenerator();
+                Command cmd = cmdGenerator.GenerateCommand(command, this.context, this.isUserLogged, this.loggedDoctorId,
                     this.reader,
                     this.writer);
 
@@ -103,7 +103,7 @@ namespace HospitalDbExtended.Core
                 }
 
                 cmd.Execute();
-                this.isLogged = cmd.IsLogged;
+                this.isUserLogged = cmd.IsUserLogged;
                 this.loggedDoctorId = cmd.LoggedDoctorId;
             }
             catch (Exception e)

@@ -7,8 +7,8 @@ namespace HospitalDbExtended.Data.CommandsModels
 {
     public class AddPatientCommand : Command
     {
-        public AddPatientCommand(HospitalContext context, bool isLogged, int loggedDoctorId, IReader reader, IWriter writer)
-            : base(context, isLogged, loggedDoctorId, reader, writer)
+        public AddPatientCommand(HospitalContext context, bool isUserLogged, int loggedDoctorId, IReader reader, IWriter writer)
+            : base(context, isUserLogged, loggedDoctorId, reader, writer)
         {
         }
 
@@ -23,7 +23,7 @@ namespace HospitalDbExtended.Data.CommandsModels
             while (shouldAddVisitations)
             {
                 this.Writer.WriteLine("Visitation information:");
-                AddVisitationCommand addVisitationCommand = new AddVisitationCommand(this.Context, this.IsLogged, this.LoggedDoctorId, this.Reader, this.Writer);
+                AddVisitationCommand addVisitationCommand = new AddVisitationCommand(this.Context, this.IsUserLogged, this.LoggedDoctorId, this.Reader, this.Writer);
                 addVisitationCommand.AddVisitation(patient.PatientId);
                 this.Writer.Write(Environment.NewLine);
                 shouldAddVisitations = Helpers.ValidateBoolEntered(string.Format(PromptingMessages.ShouldMoreCollectionEntitiesBeAdded, "visitations"));
@@ -33,7 +33,7 @@ namespace HospitalDbExtended.Data.CommandsModels
 
             while (shouldAddDiagnoses)
             {
-                AddDiagnoseCommand addDiagnoseCommand = new AddDiagnoseCommand(this.Context, this.IsLogged, this.LoggedDoctorId, this.Reader, this.Writer);
+                AddDiagnoseCommand addDiagnoseCommand = new AddDiagnoseCommand(this.Context, this.IsUserLogged, this.LoggedDoctorId, this.Reader, this.Writer);
                 addDiagnoseCommand.AddDiagnose(patient.PatientId);
                 this.Writer.Write(Environment.NewLine);
                 shouldAddDiagnoses = Helpers.ValidateBoolEntered(string.Format(PromptingMessages.ShouldMoreCollectionEntitiesBeAdded, "diagnoses"));

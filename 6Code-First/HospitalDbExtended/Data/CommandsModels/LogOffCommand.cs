@@ -5,8 +5,8 @@ namespace HospitalDbExtended.Data.CommandsModels
 {
     public class LogoffCommand : Command
     {
-        public LogoffCommand(HospitalContext context, bool isLogged, int loggedDoctorId, IReader reader, IWriter writer)
-            : base(context, isLogged, loggedDoctorId, reader, writer)
+        public LogoffCommand(HospitalContext context, bool isUserLogged, int loggedDoctorId, IReader reader, IWriter writer)
+            : base(context, isUserLogged, loggedDoctorId, reader, writer)
         {
         }
 
@@ -16,7 +16,7 @@ namespace HospitalDbExtended.Data.CommandsModels
 
             if (wasLogoffConfirmed)
             {
-                this.IsLogged = false;
+                this.IsUserLogged = false;
             }
         }
     }

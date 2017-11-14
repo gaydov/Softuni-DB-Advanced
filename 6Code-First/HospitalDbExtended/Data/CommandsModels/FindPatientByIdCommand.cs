@@ -9,8 +9,8 @@ namespace HospitalDbExtended.Data.CommandsModels
 {
     public class FindPatientByIdCommand : Command
     {
-        public FindPatientByIdCommand(HospitalContext context, bool isLogged, int loggedDoctorId, IReader reader, IWriter writer)
-            : base(context, isLogged, loggedDoctorId, reader, writer)
+        public FindPatientByIdCommand(HospitalContext context, bool isUserLogged, int loggedDoctorId, IReader reader, IWriter writer)
+            : base(context, isUserLogged, loggedDoctorId, reader, writer)
         {
         }
 
@@ -25,7 +25,7 @@ namespace HospitalDbExtended.Data.CommandsModels
         {
             int patientId = Helpers.TryIntParseInputString("Patient ID: ");
 
-            Patient currentPatient = this.Context
+            Patient patient = this.Context
                 .Patients
                 .Include(p => p.Visitations)
                 .ThenInclude(v => v.Doctor)
@@ -34,12 +34,12 @@ namespace HospitalDbExtended.Data.CommandsModels
                 .ThenInclude(pr => pr.Medicament)
                 .FirstOrDefault(p => p.PatientId == patientId && p.Visitations.Any(v => v.Doctor.DoctorId == this.LoggedDoctorId));
 
-            if (currentPatient == null)
+            if (patient == null)
             {
                 throw new ArgumentException(string.Format(ErrorMessages.PatientWithIdNotFound, patientId));
             }
 
-            return currentPatient;
+            return patient;
         }
     }
 }

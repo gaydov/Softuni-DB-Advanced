@@ -8,8 +8,8 @@ namespace HospitalDbExtended.Data.CommandsModels
 {
     public class ListVisitationsCommand : Command
     {
-        public ListVisitationsCommand(HospitalContext context, bool isLogged, int loggedDoctorId, IReader reader, IWriter writer)
-            : base(context, isLogged, loggedDoctorId, reader, writer)
+        public ListVisitationsCommand(HospitalContext context, bool isUserLogged, int loggedDoctorId, IReader reader, IWriter writer)
+            : base(context, isUserLogged, loggedDoctorId, reader, writer)
         {
         }
 

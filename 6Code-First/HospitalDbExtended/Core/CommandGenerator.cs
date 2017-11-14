@@ -11,9 +11,9 @@ namespace HospitalDbExtended.Core
     {
         private const string CommandClassSuffix = "Command";
 
-        public Command GenerateCommand(string commandName, HospitalContext context, bool isLogged, int loggedDoctorId, IReader reader, IWriter writer)
+        public Command GenerateCommand(string command, HospitalContext context, bool isLogged, int loggedDoctorId, IReader reader, IWriter writer)
         {
-            string[] cmdArgs = commandName.Split('-');
+            string[] cmdArgs = command.Split('-');
             string fullCommandName = string.Empty;
 
             foreach (string arg in cmdArgs)
@@ -23,18 +23,18 @@ namespace HospitalDbExtended.Core
 
             fullCommandName += CommandClassSuffix;
 
-            Type commandNameType = Assembly
+            Type commandType = Assembly
                 .GetExecutingAssembly()
                 .GetTypes()
                 .FirstOrDefault(t => t.Name == fullCommandName);
 
-            if (commandNameType == null)
+            if (commandType == null)
             {
                 return null;
             }
 
-            Command command = (Command)Activator.CreateInstance(commandNameType, new object[] { context, isLogged, loggedDoctorId, reader, writer });
-            return command;
+            Command resultCommand = (Command)Activator.CreateInstance(commandType, new object[] { context, isLogged, loggedDoctorId, reader, writer });
+            return resultCommand;
         }
     }
 }

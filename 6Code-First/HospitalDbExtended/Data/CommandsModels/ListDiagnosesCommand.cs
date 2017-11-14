@@ -10,8 +10,8 @@ namespace HospitalDbExtended.Data.CommandsModels
 {
     public class ListDiagnosesCommand : Command
     {
-        public ListDiagnosesCommand(HospitalContext context, bool isLogged, int loggedDoctorId, IReader reader, IWriter writer)
-            : base(context, isLogged, loggedDoctorId, reader, writer)
+        public ListDiagnosesCommand(HospitalContext context, bool isUserLogged, int loggedDoctorId, IReader reader, IWriter writer)
+            : base(context, isUserLogged, loggedDoctorId, reader, writer)
         {
         }
 
@@ -27,7 +27,7 @@ namespace HospitalDbExtended.Data.CommandsModels
 
             if (patients.Length == 0)
             {
-                this.Writer.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionEmpty, "diagnoses"));
+                this.Writer.WriteLine(string.Format(InfoMessages.ExtractedDoctorCollectionEmpty, "diagnoses"));
                 this.Writer.Write(Environment.NewLine);
             }
             else
@@ -44,11 +44,11 @@ namespace HospitalDbExtended.Data.CommandsModels
 
                 if (diagnoses.Count == 0)
                 {
-                    this.Writer.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionEmpty, "diagnoses"));
+                    this.Writer.WriteLine(string.Format(InfoMessages.ExtractedDoctorCollectionEmpty, nameof(diagnoses)));
                 }
                 else
                 {
-                    this.Writer.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionIndicator, "diagnoses"));
+                    this.Writer.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionIndicator, nameof(diagnoses)));
                     this.Writer.Write(Environment.NewLine);
 
                     foreach (Diagnose diagnose in diagnoses)
@@ -56,8 +56,6 @@ namespace HospitalDbExtended.Data.CommandsModels
                         this.Writer.WriteLine(diagnose.ToString());
                     }
                 }
-
-                this.Writer.Write(Environment.NewLine);
             }
         }
     }

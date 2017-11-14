@@ -6,8 +6,8 @@ namespace HospitalDbExtended.Data.CommandsModels
 {
     public class ExitCommand : Command
     {
-        public ExitCommand(HospitalContext context, bool isLogged, int loggedDoctorId, IReader reader, IWriter writer)
-            : base(context, isLogged, loggedDoctorId, reader, writer)
+        public ExitCommand(HospitalContext context, bool isUserLogged, int loggedDoctorId, IReader reader, IWriter writer)
+            : base(context, isUserLogged, loggedDoctorId, reader, writer)
         {
         }
 

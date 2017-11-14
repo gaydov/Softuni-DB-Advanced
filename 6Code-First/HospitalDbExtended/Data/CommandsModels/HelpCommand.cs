@@ -5,32 +5,21 @@ namespace HospitalDbExtended.Data.CommandsModels
 {
     public class HelpCommand : Command
     {
-        public HelpCommand(HospitalContext context, bool isLogged, int loggedDoctorId, IReader reader, IWriter writer)
-            : base(context, isLogged, loggedDoctorId, reader, writer)
+        public HelpCommand(HospitalContext context, bool isUserLogged, int loggedDoctorId, IReader reader, IWriter writer)
+            : base(context, isUserLogged, loggedDoctorId, reader, writer)
         {
         }
 
         public override void Execute()
         {
-            if (this.IsLogged == false)
-            {
-                this.DisplayHelpInLogoffState();
-            }
-            else
+            if (this.IsUserLogged)
             {
                 this.DisplayHelpLoginState();
             }
-        }
-
-        private void DisplayHelpInLogoffState()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.AppendLine("\"register\" - Register into the system with username and password.");
-            sb.AppendLine("\"login\" - Login to the system with username and password.");
-            sb.Append("\"exit\" - Exit the program.");
-
-            this.Writer.WriteLine(sb.ToString());
+            else
+            {
+                this.DisplayHelpInLogoffState();
+            }
         }
 
         private void DisplayHelpLoginState()
@@ -50,6 +39,17 @@ namespace HospitalDbExtended.Data.CommandsModels
             sb.AppendLine("\"list-prescriptions\" - Lists all of your prescriptions.");
             sb.AppendLine("\"add-prescription\" - Adds a prescription to a patient of yours.");
             sb.Append("\"logoff\" - Logoff from the system.");
+
+            this.Writer.WriteLine(sb.ToString());
+        }
+
+        private void DisplayHelpInLogoffState()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine("\"register\" - Register into the system with username and password.");
+            sb.AppendLine("\"login\" - Login to the system with username and password.");
+            sb.Append("\"exit\" - Exit the program.");
 
             this.Writer.WriteLine(sb.ToString());
         }

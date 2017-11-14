@@ -8,8 +8,8 @@ namespace HospitalDbExtended.Data.CommandsModels
 {
     public class AddVisitationCommand : Command
     {
-        public AddVisitationCommand(HospitalContext context, bool isLogged, int loggedDoctorId, IReader reader, IWriter writer)
-            : base(context, isLogged, loggedDoctorId, reader, writer)
+        public AddVisitationCommand(HospitalContext context, bool isUserLogged, int loggedDoctorId, IReader reader, IWriter writer)
+            : base(context, isUserLogged, loggedDoctorId, reader, writer)
         {
         }
 
@@ -27,9 +27,9 @@ namespace HospitalDbExtended.Data.CommandsModels
             this.Writer.Write("Comments: ");
             string comments = this.Reader.ReadLine();
 
-            Patient currentPatient = this.Context.Patients.FirstOrDefault(p => p.PatientId == patientId);
-            Doctor currentDoctor = this.Context.Doctors.FirstOrDefault(d => d.DoctorId == this.LoggedDoctorId);
-            Visitation visitation = new Visitation(date, currentPatient, currentDoctor, comments);
+            Patient patient = this.Context.Patients.FirstOrDefault(p => p.PatientId == patientId);
+            Doctor doctor = this.Context.Doctors.FirstOrDefault(d => d.DoctorId == this.LoggedDoctorId);
+            Visitation visitation = new Visitation(date, patient, doctor, comments);
             this.Context.Visitations.Add(visitation);
             this.Context.SaveChanges();
 

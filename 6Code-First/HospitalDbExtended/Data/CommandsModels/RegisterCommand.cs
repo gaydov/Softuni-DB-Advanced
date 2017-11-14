@@ -8,14 +8,14 @@ namespace HospitalDbExtended.Data.CommandsModels
 {
     public class RegisterCommand : Command
     {
-        public RegisterCommand(HospitalContext context, bool isLogged, int loggedDoctorId, IReader reader, IWriter writer)
-            : base(context, isLogged, loggedDoctorId, reader, writer)
+        public RegisterCommand(HospitalContext context, bool isUserLogged, int loggedDoctorId, IReader reader, IWriter writer)
+            : base(context, isUserLogged, loggedDoctorId, reader, writer)
         {
         }
 
         public override void Execute()
         {
-            string name = Helpers.IsNullOrEmptyValidator("Names: ");
+            string names = Helpers.IsNullOrEmptyValidator("Names: ");
             string specialty = Helpers.IsNullOrEmptyValidator("Specialty: ");
             string username = Helpers.IsNullOrEmptyValidator("Username: ");
 
@@ -29,13 +29,13 @@ namespace HospitalDbExtended.Data.CommandsModels
 
             this.Writer.Write("Password: ");
             string password = Helpers.EnterPasswordHidden();
-            Doctor doctor = new Doctor(name, specialty, username, password);
+            Doctor doctor = new Doctor(names, specialty, username, password);
 
             this.Context.Doctors.Add(doctor);
             this.Context.SaveChanges();
 
             this.Writer.Write(Environment.NewLine);
-            this.Writer.WriteLine(string.Format(InfoMessages.DoctorRegisteredSuccessfully, name, specialty, username));
+            this.Writer.WriteLine(string.Format(InfoMessages.DoctorRegisteredSuccessfully, names, specialty, username));
         }
     }
 }

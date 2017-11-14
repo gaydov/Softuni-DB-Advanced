@@ -8,8 +8,8 @@ namespace HospitalDbExtended.Data.CommandsModels
 {
     public class LoginCommand : Command
     {
-        public LoginCommand(HospitalContext context, bool isLogged, int loggedDoctorId, IReader reader, IWriter writer)
-            : base(context, isLogged, loggedDoctorId, reader, writer)
+        public LoginCommand(HospitalContext context, bool isUserLogged, int loggedDoctorId, IReader reader, IWriter writer)
+            : base(context, isUserLogged, loggedDoctorId, reader, writer)
         {
         }
 
@@ -35,7 +35,7 @@ namespace HospitalDbExtended.Data.CommandsModels
                 throw new ArgumentException(ErrorMessages.InvalidCredentials);
             }
 
-            this.IsLogged = true;
+            this.IsUserLogged = true;
             this.LoggedDoctorId = doctor.DoctorId;
 
             this.Writer.Write(Environment.NewLine);

@@ -10,8 +10,8 @@ namespace HospitalDbExtended.Data.CommandsModels
 {
     public class ListPrescriptionsCommand : Command
     {
-        public ListPrescriptionsCommand(HospitalContext context, bool isLogged, int loggedDoctorId, IReader reader, IWriter writer)
-            : base(context, isLogged, loggedDoctorId, reader, writer)
+        public ListPrescriptionsCommand(HospitalContext context, bool isUserLogged, int loggedDoctorId, IReader reader, IWriter writer)
+            : base(context, isUserLogged, loggedDoctorId, reader, writer)
         {
         }
 
@@ -25,14 +25,14 @@ namespace HospitalDbExtended.Data.CommandsModels
                 .Where(p => p.Visitations.Any(v => v.DoctorId == this.LoggedDoctorId))
                 .ToArray();
 
+            IList<PatientMedicament> prescriptions = new List<PatientMedicament>();
+
             if (patients.Length == 0)
             {
-                this.Writer.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionEmpty, "prescriptions"));
+                this.Writer.WriteLine(string.Format(InfoMessages.ExtractedDoctorCollectionEmpty, nameof(prescriptions)));
             }
             else
             {
-                IList<PatientMedicament> prescriptions = new List<PatientMedicament>();
-
                 foreach (Patient patient in patients)
                 {
                     foreach (PatientMedicament prescription in patient.Prescriptions)
@@ -43,12 +43,11 @@ namespace HospitalDbExtended.Data.CommandsModels
 
                 if (prescriptions.Count == 0)
                 {
-                    this.Writer.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionEmpty, "prescriptions"));
-                    this.Writer.Write(Environment.NewLine);
+                    this.Writer.WriteLine(string.Format(InfoMessages.ExtractedDoctorCollectionEmpty, nameof(prescriptions)));
                 }
                 else
                 {
-                    this.Writer.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionIndicator, "prescriptions"));
+                    this.Writer.WriteLine(string.Format(InfoMessages.ExtractedEntityCollectionIndicator, nameof(prescriptions)));
                     this.Writer.Write(Environment.NewLine);
 
                     foreach (PatientMedicament prescription in prescriptions)
@@ -57,8 +56,6 @@ namespace HospitalDbExtended.Data.CommandsModels
                     }
                 }
             }
-
-            this.Writer.Write(Environment.NewLine);
         }
     }
 }

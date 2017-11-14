@@ -7,8 +7,8 @@ namespace HospitalDbExtended.Data.CommandsModels
 {
     public class AddMedicamentCommand : Command
     {
-        public AddMedicamentCommand(HospitalContext context, bool isLogged, int loggedDoctorId, IReader reader, IWriter writer)
-            : base(context, isLogged, loggedDoctorId, reader, writer)
+        public AddMedicamentCommand(HospitalContext context, bool isUserLogged, int loggedDoctorId, IReader reader, IWriter writer)
+            : base(context, isUserLogged, loggedDoctorId, reader, writer)
         {
         }
 

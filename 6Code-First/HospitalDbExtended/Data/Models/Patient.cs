@@ -47,13 +47,13 @@ namespace HospitalDbExtended.Data.Models
         {
             StringBuilder sb = new StringBuilder();
 
-            string hasInsurance = "No";
+            string hasInsuranceStr = "No";
             if (this.HasInsurance)
             {
-                hasInsurance = "Yes";
+                hasInsuranceStr = "Yes";
             }
 
-            sb.AppendLine($"ID: {this.PatientId}, Names: \"{this.FirstName} {this.LastName}\", Address: \"{this.Address}\", Email: {this.Email}, Insured: {hasInsurance}");
+            sb.AppendLine($"ID: {this.PatientId}, Names: \"{this.FirstName} {this.LastName}\", Address: \"{this.Address}\", Email: {this.Email}, Insured: {hasInsuranceStr}");
             sb.Append(Environment.NewLine);
 
             sb.AppendLine("    Visitations:");
@@ -75,7 +75,7 @@ namespace HospitalDbExtended.Data.Models
             sb.AppendLine("    Prescriptions:");
             foreach (PatientMedicament prescription in this.Prescriptions)
             {
-                sb.AppendLine($"    {prescription}");
+                sb.Append($"    {prescription}");
             }
 
             return sb.ToString();

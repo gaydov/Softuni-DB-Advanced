@@ -9,23 +9,23 @@ namespace HospitalDbExtended.Data.CommandsModels
 {
     public class FindPatientByNameCommand : Command
     {
-        public FindPatientByNameCommand(HospitalContext context, bool isLogged, int loggedDoctorId, IReader reader, IWriter writer)
-            : base(context, isLogged, loggedDoctorId, reader, writer)
+        public FindPatientByNameCommand(HospitalContext context, bool isUserLogged, int loggedDoctorId, IReader reader, IWriter writer)
+            : base(context, isUserLogged, loggedDoctorId, reader, writer)
         {
         }
 
         public override void Execute()
         {
-            Patient[] searchedPatients = this.TryFindPatientByName();
+            Patient[] searchedPatients = this.TryFindPatientsByName();
             this.Writer.Write(Environment.NewLine);
 
-            foreach (Patient searchedPatient in searchedPatients)
+            foreach (Patient patient in searchedPatients)
             {
-                this.Writer.WriteLine(searchedPatient.ToString());
+                this.Writer.WriteLine(patient.ToString());
             }
         }
 
-        private Patient[] TryFindPatientByName()
+        private Patient[] TryFindPatientsByName()
         {
             string firstName = Helpers.IsNullOrEmptyValidator("First name: ");
             string lastName = Helpers.IsNullOrEmptyValidator("Last name: ");
@@ -42,7 +42,7 @@ namespace HospitalDbExtended.Data.CommandsModels
 
             if (patients.Length == 0)
             {
-                throw new ArgumentException(string.Format(ErrorMessages.PatientWithNameNotFound, $"\"{firstName} {lastName}\""));
+                throw new ArgumentException(string.Format(ErrorMessages.PatientsWithNameNotFound, $"\"{firstName} {lastName}\""));
             }
 
             return patients;
