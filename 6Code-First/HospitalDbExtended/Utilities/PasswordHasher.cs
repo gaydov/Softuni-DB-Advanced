@@ -6,17 +6,16 @@ namespace HospitalDbExtended.Utilities
 {
     public static class PasswordHasher
     {
-        public static string GetHash(string password)
+        public static string GenerateHash(string password)
         {
             using (SHA256 sha256 = SHA256.Create())
             {
                 byte[] hashedBytes = sha256.ComputeHash(Encoding.Unicode.GetBytes(password));
- 
                 return BitConverter.ToString(hashedBytes).Replace("-", string.Empty).ToLower();
             }
         }
 
-        public static string GetSalt()
+        public static string GenerateSalt()
         {
             byte[] bytes = new byte[128 / 8];
 

@@ -28,7 +28,7 @@ namespace HospitalDbExtended.Data.CommandsModels
                 throw new ArgumentException(ErrorMessages.InvalidCredentials);
             }
 
-            string hashedPassword = PasswordHasher.GetHash(password + doctor.Salt);
+            string hashedPassword = PasswordHasher.GenerateHash(password + doctor.Salt);
 
             if (!hashedPassword.Equals(doctor.Password))
             {

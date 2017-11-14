@@ -14,8 +14,8 @@ namespace HospitalDbExtended.Data.Models
             this.Name = name;
             this.Specialty = specialty;
             this.Username = username;
-            this.Salt = PasswordHasher.GetSalt();
-            this.Password = PasswordHasher.GetHash(password + this.Salt);
+            this.Salt = PasswordHasher.GenerateSalt();
+            this.Password = PasswordHasher.GenerateHash(password + this.Salt);
             this.Visitations = new List<Visitation>();
         }
 
