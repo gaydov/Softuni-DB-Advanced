@@ -10,6 +10,7 @@
 *.sln.docstates
 ConnectionDb.cs
 ConnectionConfig.cs
+Settings.StyleCop
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
