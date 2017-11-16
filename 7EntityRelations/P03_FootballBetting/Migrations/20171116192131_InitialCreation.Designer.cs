@@ -11,7 +11,7 @@ using System;
 namespace P03_FootballBetting.Migrations
 {
     [DbContext(typeof(FootballBettingContext))]
-    [Migration("20171116145823_InitialCreation")]
+    [Migration("20171116192131_InitialCreation")]
     partial class InitialCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,7 +50,9 @@ namespace P03_FootballBetting.Migrations
                     b.Property<int>("ColorId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.HasKey("ColorId");
 
@@ -62,7 +64,9 @@ namespace P03_FootballBetting.Migrations
                     b.Property<int>("CountryId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.HasKey("CountryId");
 
@@ -150,7 +154,9 @@ namespace P03_FootballBetting.Migrations
                     b.Property<int>("PositionId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.HasKey("PositionId");
 
@@ -164,13 +170,18 @@ namespace P03_FootballBetting.Migrations
 
                     b.Property<decimal>("Budget");
 
-                    b.Property<string>("Initials");
+                    b.Property<string>("Initials")
+                        .IsRequired()
+                        .HasColumnType("NCHAR(3)");
 
-                    b.Property<string>("LogoUrl");
+                    b.Property<string>("LogoUrl")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .IsUnicode(true);
 
                     b.Property<int>("PrimaryKitColorId");
 
@@ -213,13 +224,21 @@ namespace P03_FootballBetting.Migrations
 
                     b.Property<decimal>("Balance");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
-                    b.Property<string>("Password");
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(20);
 
-                    b.Property<string>("Username");
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(20);
 
                     b.HasKey("UserId");
 

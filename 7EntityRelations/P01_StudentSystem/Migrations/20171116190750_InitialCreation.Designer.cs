@@ -12,7 +12,7 @@ using System;
 namespace P01_StudentSystem.Migrations
 {
     [DbContext(typeof(StudentSystemContext))]
-    [Migration("20171116075133_InitialCreation")]
+    [Migration("20171116190750_InitialCreation")]
     partial class InitialCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
