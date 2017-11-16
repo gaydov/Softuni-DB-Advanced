@@ -11,9 +11,10 @@ using System;
 namespace P03_FootballBetting.Migrations
 {
     [DbContext(typeof(FootballBettingContext))]
-    partial class FootballBettingContextModelSnapshot : ModelSnapshot
+    [Migration("20171116174713_TeamNameAndInitialsUnicode")]
+    partial class TeamNameAndInitialsUnicode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

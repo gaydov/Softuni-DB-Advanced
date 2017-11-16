@@ -147,6 +147,7 @@ namespace P03_FootballBetting.Data
 
                 entity.Property(t => t.Name)
                     .IsRequired()
+                    .IsUnicode()
                     .HasMaxLength(50);
 
                 entity.Property(t => t.LogoUrl)
@@ -155,7 +156,7 @@ namespace P03_FootballBetting.Data
 
                 entity.Property(t => t.Initials)
                     .IsRequired()
-                    .HasColumnType("CHAR(3)");
+                    .HasColumnType("NCHAR(3)");
 
                 entity.HasOne(t => t.PrimaryKitColor)
                     .WithMany(c => c.PrimaryKitTeams)
