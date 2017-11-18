@@ -36,13 +36,11 @@ namespace P01_BillsPaymentSystem.Data.Models
         public void Withdraw(decimal amount)
         {
             this.MoneyOwed += amount;
-            this.Limit -= amount;
         }
 
         public void Deposit(decimal amount)
         {
             this.MoneyOwed -= amount;
-            this.Limit += amount;
         }
 
         public override string ToString()

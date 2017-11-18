@@ -1,4 +1,4 @@
-﻿namespace P01_BillsPaymentSystem.Data
+﻿namespace P01_BillsPaymentSystem.Data.Constants
 {
     public static class PromptMessages
     {

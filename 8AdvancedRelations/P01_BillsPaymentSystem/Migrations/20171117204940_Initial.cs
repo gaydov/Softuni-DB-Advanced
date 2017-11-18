@@ -109,7 +109,7 @@ namespace P01_BillsPaymentSystem.Migrations
                 unique: true);
 
             migrationBuilder.Sql(@"ALTER TABLE PaymentMethods
-                                   ADD CONSTRAINT CHK_CreditCardId_BankAccountId 
+                                   ADD CONSTRAINT CHK_CreditCardId_OR_BankAccountId_IS_NULL
                                    CHECK ((CreditCardId IS NULL AND BankAccountId IS NOT NULL) 
                                           OR (BankAccountId IS NULL AND CreditCardId IS NOT NULL))");
         }
