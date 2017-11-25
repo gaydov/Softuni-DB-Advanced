@@ -45,6 +45,14 @@ namespace PhotoShare.Client.Core.Commands
                 IsPublic = true
             };
 
+            AlbumRole albumRole = new AlbumRole
+            {
+                User = currentUser,
+                Album = album,
+                Role = Role.Owner
+            };
+
+            album.AlbumRoles.Add(albumRole);
             context.Albums.Add(album);
             context.SaveChanges();
 
