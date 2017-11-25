@@ -17,8 +17,10 @@ namespace PhotoShare.Models
 
         public string Username { get; set; }
 
-        [Password(6, 50, ContainsDigit = true, ContainsLowercase = true, ErrorMessage = "Invalid password")]
         public string Password { get; set; }
+
+        #warning If you want to disable the password hashing you can remove "Salt" property of this class.
+        public string Salt { get; set; }
 
         [Email]
         public string Email { get; set; }

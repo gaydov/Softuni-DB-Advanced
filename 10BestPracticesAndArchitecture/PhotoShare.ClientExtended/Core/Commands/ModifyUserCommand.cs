@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using PhotoShare.Client.Utilities;
+using PhotoShare.ClientExtended.Utilities;
 using PhotoShare.Data;
 using PhotoShare.Models;
 
-namespace PhotoShare.Client.Core.Commands
+namespace PhotoShare.ClientExtended.Core.Commands
 {
     public class ModifyUserCommand : Command
     {
@@ -29,6 +29,11 @@ namespace PhotoShare.Client.Core.Commands
                 throw new ArgumentException($"User {username} not found!");
             }
 
+            if (!Helpers.IsUserTheCurrentlyLoggedOne(currentUser))
+            {
+                throw new InvalidOperationException("Invalid credentials!");
+            }
+
             PropertyInfo[] userProperties = currentUser.GetType()
                 .GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
@@ -42,10 +47,10 @@ namespace PhotoShare.Client.Core.Commands
                 case "password":
                     if (!propertyNewValue.Any(char.IsLower) || !propertyNewValue.Any(char.IsDigit))
                     {
-                        throw new ArgumentException($"Value {propertyNewValue} not valid.{Environment.NewLine}Invalid Password");
+                        throw new ArgumentException($"Value {propertyNewValue} not valid. Password must include a lower letter and a digit.{Environment.NewLine}Invalid Password");
                     }
 
-                    #warning If you want to disable the password hashing you can remove the use of the PasswordHasher and the "Salt" property of "User".
+#warning If you want to disable the password hashing you can remove "Salt" property of "User" class and the use of the PasswordHasher.
                     currentUser.Salt = PasswordHasher.GenerateSalt();
                     currentUser.Password = PasswordHasher.GenerateHash(propertyNewValue + currentUser.Salt);
                     break;

@@ -1,7 +1,7 @@
-﻿using PhotoShare.Client.Core;
+﻿using PhotoShare.ClientExtended.Core;
 using PhotoShare.Data;
 
-namespace PhotoShare.Client
+namespace PhotoShare.ClientExtended
 {
     public class Application
     {
