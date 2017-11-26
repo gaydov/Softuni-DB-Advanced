@@ -41,6 +41,7 @@ namespace PhotoShare.ClientExtended.Core
                             typeof(ListFriendsCommand),
                             typeof(RegisterUserCommand),
                             typeof(LoginCommand),
+                            typeof(LogoutCommand),
                             typeof(ExitCommand)
                         };
                     }

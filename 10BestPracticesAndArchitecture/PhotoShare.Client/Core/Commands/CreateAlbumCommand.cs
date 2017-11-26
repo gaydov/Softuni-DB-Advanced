@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using PhotoShare.Client.Utilities;
 using PhotoShare.Data;
 using PhotoShare.Models;
 
@@ -13,7 +14,7 @@ namespace PhotoShare.Client.Core.Commands
             string username = data[0];
             string title = data[1];
             bool isColorValid = Enum.TryParse(data[2], true, out Color color);
-            string[] tags = data.Skip(3).ToArray();
+            string[] tags = data.Skip(3).Select(t => t.ValidateOrTransform()).ToArray();
 
             User currentUser = context.Users
                 .SingleOrDefault(u => u.Username.Equals(username));
@@ -33,7 +34,7 @@ namespace PhotoShare.Client.Core.Commands
                 throw new ArgumentException($"Color {data[2]} not found!");
             }
 
-            if (tags.Except(context.Tags.Select(t => t.Name.Substring(1))).Any())
+            if (tags.Except(context.Tags.Select(t => t.Name)).Any())
             {
                 throw new ArgumentException("Invalid tags!");
             }
@@ -58,7 +59,7 @@ namespace PhotoShare.Client.Core.Commands
 
             foreach (string tag in tags)
             {
-                Tag currentTag = context.Tags.SingleOrDefault(t => t.Name.Equals("#" + tag));
+                Tag currentTag = context.Tags.SingleOrDefault(t => t.Name.Equals(tag));
                 Album currentAlbum = context.Albums.SingleOrDefault(a => a.Name.Equals(title));
 
                 AlbumTag albumTag = new AlbumTag
