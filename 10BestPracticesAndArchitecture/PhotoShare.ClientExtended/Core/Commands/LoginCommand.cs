@@ -14,14 +14,13 @@ namespace PhotoShare.ClientExtended.Core.Commands
             string password = data[1];
 
             User currentUser = context.Users
-                .FirstOrDefault(u => u.Username.Equals(username));
+                .SingleOrDefault(u => u.Username.Equals(username));
 
             if (currentUser == null)
             {
                 throw new ArgumentException("Invalid username or password!");
             }
 
-            #warning If you want to disable the password hashing you can remove "Salt" property of "User" class and the use of the PasswordHasher.
             string hashedPassword = PasswordHasher.GenerateHash(password + currentUser.Salt);
 
             if (!currentUser.Password.Equals(hashedPassword))

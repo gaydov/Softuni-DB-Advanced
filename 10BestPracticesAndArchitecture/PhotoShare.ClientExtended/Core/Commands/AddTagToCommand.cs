@@ -21,14 +21,14 @@ namespace PhotoShare.ClientExtended.Core.Commands
             }
 
             Tag currentTag = context.Tags
-                .FirstOrDefault(t => t.Name.Substring(1).Equals(tagText));
+                .SingleOrDefault(t => t.Name.Substring(1).Equals(tagText));
 
             Album currentAlbum = context.Albums
                 .Include(a => a.AlbumRoles)
-                .FirstOrDefault(a => a.Name.Equals(albumName));
+                .SingleOrDefault(a => a.Name.Equals(albumName));
 
             if (!currentAlbum.AlbumRoles.Select(r => r.UserId).Contains(Session.User.UserId)
-                || currentAlbum.AlbumRoles.FirstOrDefault(r => r.UserId == Session.User.UserId).Role != Role.Owner)
+                || currentAlbum.AlbumRoles.Single(r => r.UserId == Session.User.UserId).Role != Role.Owner)
             {
                 throw new InvalidOperationException("Invalid credentials!");
             }

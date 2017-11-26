@@ -17,7 +17,7 @@ namespace PhotoShare.Client.Core
             Type commandType = Assembly
                 .GetExecutingAssembly()
                 .GetTypes()
-                .FirstOrDefault(t => t.Name.Equals(fullCommandName, StringComparison.InvariantCultureIgnoreCase));
+                .SingleOrDefault(t => t.Name.Equals(fullCommandName, StringComparison.InvariantCultureIgnoreCase));
 
             if (commandType == null)
             {

@@ -17,7 +17,7 @@ namespace PhotoShare.Client.Core.Commands
 
             Album album = context.Albums
                 .Include(a => a.Pictures)
-                .FirstOrDefault(a => a.Name.Equals(albumName));
+                .SingleOrDefault(a => a.Name.Equals(albumName));
 
             if (album == null)
             {

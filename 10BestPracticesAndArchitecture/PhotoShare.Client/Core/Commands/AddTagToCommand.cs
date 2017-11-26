@@ -20,8 +20,8 @@ namespace PhotoShare.Client.Core.Commands
                 throw new ArgumentException("Either tag or album does not exist!");
             }
 
-            Tag currentTag = context.Tags.FirstOrDefault(t => t.Name.Substring(1).Equals(tagText));
-            Album currentAlbum = context.Albums.FirstOrDefault(a => a.Name.Equals(albumName));
+            Tag currentTag = context.Tags.SingleOrDefault(t => t.Name.Substring(1).Equals(tagText));
+            Album currentAlbum = context.Albums.SingleOrDefault(a => a.Name.Equals(albumName));
 
             AlbumTag currentAlbumTag = new AlbumTag
             {

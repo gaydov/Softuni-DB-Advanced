@@ -31,7 +31,6 @@ namespace PhotoShare.Client.Core.Commands
                 throw new ArgumentException("Passwords do not match!");
             }
 
-            #warning If you want to disable the password hashing you can remove "Salt" property of "User" and the use of the PasswordHasher.
             string salt = PasswordHasher.GenerateSalt();
 
             User currentUser = new User

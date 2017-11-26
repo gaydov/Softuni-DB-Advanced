@@ -18,7 +18,7 @@ namespace PhotoShare.ClientExtended.Core.Commands
 
             Album album = context.Albums
                 .Include(a => a.AlbumRoles)
-                .FirstOrDefault(a => a.Id == albumId);
+                .SingleOrDefault(a => a.Id == albumId);
 
             if (album == null)
             {
@@ -28,7 +28,7 @@ namespace PhotoShare.ClientExtended.Core.Commands
             string username = data[1];
 
             User user = context.Users
-                .FirstOrDefault(u => u.Username.Equals(username));
+                .SingleOrDefault(u => u.Username.Equals(username));
 
             if (user == null)
             {
@@ -51,13 +51,13 @@ namespace PhotoShare.ClientExtended.Core.Commands
 
             if (album.AlbumRoles.Any(r => r.UserId == user.UserId && r.AlbumId == album.Id))
             {
-                Role currentRole = album.AlbumRoles.First(r => r.UserId == user.UserId && r.AlbumId == album.Id).Role;
+                Role currentRole = album.AlbumRoles.Single(r => r.UserId == user.UserId && r.AlbumId == album.Id).Role;
 
                 throw new ArgumentException($"User {username} has already assigned {currentRole.ToString()} role to album {album.Name}.");
             }
 
             if (!album.AlbumRoles.Select(r => r.UserId).Contains(Session.User.UserId)
-                || album.AlbumRoles.FirstOrDefault(r => r.UserId == Session.User.UserId).Role != Role.Owner)
+                || album.AlbumRoles.Single(r => r.UserId == Session.User.UserId).Role != Role.Owner)
             {
                 throw new InvalidOperationException("Invalid credentials!");
             }

@@ -14,7 +14,7 @@ namespace PhotoShare.ClientExtended.Core.Commands
             string username = data[0];
 
             User currentUser = context.Users
-                .FirstOrDefault(u => u.Username.Equals(username));
+                .SingleOrDefault(u => u.Username.Equals(username));
 
             if (currentUser == null)
             {

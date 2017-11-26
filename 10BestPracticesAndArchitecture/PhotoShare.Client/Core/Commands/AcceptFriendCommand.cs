@@ -20,7 +20,7 @@ namespace PhotoShare.Client.Core.Commands
                 .ThenInclude(f => f.Friend)
                 .Include(u => u.AddedAsFriendBy)
                 .ThenInclude(f => f.Friend)
-                .FirstOrDefault(u => u.Username.Equals(receiverUsername));
+                .SingleOrDefault(u => u.Username.Equals(receiverUsername));
 
             if (receiver == null)
             {
@@ -33,7 +33,7 @@ namespace PhotoShare.Client.Core.Commands
                 .ThenInclude(f => f.Friend)
                 .Include(u => u.AddedAsFriendBy)
                 .ThenInclude(f => f.Friend)
-                .FirstOrDefault(u => u.Username.Equals(senderUsername));
+                .SingleOrDefault(u => u.Username.Equals(senderUsername));
 
             if (sender == null)
             {

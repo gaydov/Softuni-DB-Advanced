@@ -18,7 +18,7 @@ namespace PhotoShare.ClientExtended.Core.Commands
             Album album = context.Albums
                 .Include(a => a.Pictures)
                 .Include(a => a.AlbumRoles)
-                .FirstOrDefault(a => a.Name.Equals(albumName));
+                .SingleOrDefault(a => a.Name.Equals(albumName));
 
             if (album == null)
             {
@@ -26,7 +26,7 @@ namespace PhotoShare.ClientExtended.Core.Commands
             }
 
             if (!album.AlbumRoles.Select(r => r.UserId).Contains(Session.User.UserId)
-                || album.AlbumRoles.FirstOrDefault(r => r.UserId == Session.User.UserId).Role != Role.Owner)
+                || album.AlbumRoles.Single(r => r.UserId == Session.User.UserId).Role != Role.Owner)
             {
                 throw new InvalidOperationException("Invalid credentials!");
             }

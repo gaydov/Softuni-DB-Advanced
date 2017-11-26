@@ -18,7 +18,7 @@ namespace PhotoShare.Client.Core.Commands
                 .Users
                 .Include(u => u.AddedAsFriendBy)
                 .ThenInclude(f => f.User)
-                .FirstOrDefault(u => u.Username.Equals(username));
+                .SingleOrDefault(u => u.Username.Equals(username));
 
             if (currentUser == null)
             {

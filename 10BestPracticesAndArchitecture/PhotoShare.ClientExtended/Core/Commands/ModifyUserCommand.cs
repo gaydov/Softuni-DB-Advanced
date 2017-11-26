@@ -22,7 +22,7 @@ namespace PhotoShare.ClientExtended.Core.Commands
             string propertyNewValue = data[2];
 
             User currentUser = context.Users
-                .FirstOrDefault(u => u.Username.Equals(username));
+                .SingleOrDefault(u => u.Username.Equals(username));
 
             if (currentUser == null)
             {
@@ -50,13 +50,12 @@ namespace PhotoShare.ClientExtended.Core.Commands
                         throw new ArgumentException($"Value {propertyNewValue} not valid. Password must include a lower letter and a digit.{Environment.NewLine}Invalid Password");
                     }
 
-#warning If you want to disable the password hashing you can remove "Salt" property of "User" class and the use of the PasswordHasher.
                     currentUser.Salt = PasswordHasher.GenerateSalt();
                     currentUser.Password = PasswordHasher.GenerateHash(propertyNewValue + currentUser.Salt);
                     break;
 
                 case "borntown":
-                    Town newBornTown = context.Towns.FirstOrDefault(t => t.Name.Equals(propertyNewValue));
+                    Town newBornTown = context.Towns.SingleOrDefault(t => t.Name.Equals(propertyNewValue));
 
                     if (newBornTown == null)
                     {
@@ -67,7 +66,7 @@ namespace PhotoShare.ClientExtended.Core.Commands
                     break;
 
                 case "currenttown":
-                    Town newCurrentTown = context.Towns.FirstOrDefault(t => t.Name.Equals(propertyNewValue));
+                    Town newCurrentTown = context.Towns.SingleOrDefault(t => t.Name.Equals(propertyNewValue));
 
                     if (newCurrentTown == null)
                     {

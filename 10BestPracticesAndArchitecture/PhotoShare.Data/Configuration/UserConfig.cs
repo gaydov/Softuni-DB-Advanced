@@ -11,7 +11,7 @@ namespace PhotoShare.Data.Configuration
             builder.HasKey(e => e.UserId);
 
             builder.Property(e => e.Username)
-                .IsRequired(true)
+                .IsRequired()
                 .IsUnicode(false)
                 .HasMaxLength(30);
 
@@ -27,12 +27,12 @@ namespace PhotoShare.Data.Configuration
 
             builder.Property(e => e.FirstName)
                 .IsRequired(false)
-                .IsUnicode(true)
+                .IsUnicode()
                 .HasMaxLength(60);
 
             builder.Property(e => e.LastName)
                 .IsRequired(false)
-                .IsUnicode(true)
+                .IsUnicode()
                 .HasMaxLength(60);
 
             builder.Ignore(e => e.FullName);
@@ -62,7 +62,7 @@ namespace PhotoShare.Data.Configuration
                 .IsRequired(false);
 
             builder.Property(e => e.IsDeleted)
-                .IsRequired(true)
+                .IsRequired()
                 .HasDefaultValue(false);
         }
     }

@@ -16,7 +16,7 @@ namespace PhotoShare.Client.Core.Commands
             string[] tags = data.Skip(3).ToArray();
 
             User currentUser = context.Users
-                .FirstOrDefault(u => u.Username.Equals(username));
+                .SingleOrDefault(u => u.Username.Equals(username));
 
             if (currentUser == null)
             {
@@ -58,8 +58,8 @@ namespace PhotoShare.Client.Core.Commands
 
             foreach (string tag in tags)
             {
-                Tag currentTag = context.Tags.FirstOrDefault(t => t.Name.Equals("#" + tag));
-                Album currentAlbum = context.Albums.FirstOrDefault(a => a.Name.Equals(title));
+                Tag currentTag = context.Tags.SingleOrDefault(t => t.Name.Equals("#" + tag));
+                Album currentAlbum = context.Albums.SingleOrDefault(a => a.Name.Equals(title));
 
                 AlbumTag albumTag = new AlbumTag
                 {

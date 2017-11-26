@@ -7,7 +7,7 @@ namespace PhotoShare.Client
     {
         public static void Main()
         {
-            //ResetDatabase();
+            ResetDatabase();
             CommandDispatcher commandDispatcher = new CommandDispatcher();
             PhotoShareContext context = new PhotoShareContext();
 
