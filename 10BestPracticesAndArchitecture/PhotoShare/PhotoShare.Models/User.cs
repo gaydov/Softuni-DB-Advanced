@@ -18,8 +18,7 @@ namespace PhotoShare.Models
         public string Username { get; set; }
 
         public string Password { get; set; }
-
-        #warning If you want to disable the password hashing you can remove "Salt" property of this class.
+        
         public string Salt { get; set; }
 
         [Email]
