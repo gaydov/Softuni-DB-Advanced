@@ -5,9 +5,9 @@ using ProductsShop.Models.ModelDTOs;
 
 namespace ProductsShop.App.Core
 {
-    public class ProductsShopProfile : Profile
+    public class ProductsShopMappingProfile : Profile
     {
-        public ProductsShopProfile()
+        public ProductsShopMappingProfile()
         {
             this.CreateMap<Product, ProductWithSellerDto>()
                 .ForMember(dto => dto.Seller,
