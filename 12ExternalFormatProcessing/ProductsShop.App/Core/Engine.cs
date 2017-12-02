@@ -9,7 +9,6 @@ namespace ProductsShop.App.Core
         private readonly CommandInterpreter cmdInterpreter;
         private readonly ProductsShopContext context;
 
-
         public Engine(CommandInterpreter commandInterpreter, ProductsShopContext context)
         {
             this.cmdInterpreter = commandInterpreter;
