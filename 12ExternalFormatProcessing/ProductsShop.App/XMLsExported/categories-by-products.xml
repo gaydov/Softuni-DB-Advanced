@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<categories>
+  <category name="Electronics">
+    <products-count>27</products-count>
+    <average-price>801.857407</average-price>
+    <total-revenue>21650.15</total-revenue>
+  </category>
+  <category name="Autoparts">
+    <products-count>22</products-count>
+    <average-price>929.309090</average-price>
+    <total-revenue>20444.80</total-revenue>
+  </category>
+  <category name="For Children">
+    <products-count>20</products-count>
+    <average-price>586.168500</average-price>
+    <total-revenue>11723.37</total-revenue>
+  </category>
+  <category name="Drugs">
+    <products-count>20</products-count>
+    <average-price>650.743500</average-price>
+    <total-revenue>13014.87</total-revenue>
+  </category>
+  <category name="Other">
+    <products-count>19</products-count>
+    <average-price>821.969473</average-price>
+    <total-revenue>15617.42</total-revenue>
+  </category>
+  <category name="Fashion">
+    <products-count>18</products-count>
+    <average-price>792.982777</average-price>
+    <total-revenue>14273.69</total-revenue>
+  </category>
+  <category name="Garden">
+    <products-count>17</products-count>
+    <average-price>720.255294</average-price>
+    <total-revenue>12244.34</total-revenue>
+  </category>
+  <category name="Adult">
+    <products-count>16</products-count>
+    <average-price>672.513750</average-price>
+    <total-revenue>10760.22</total-revenue>
+  </category>
+  <category name="Weapons">
+    <products-count>15</products-count>
+    <average-price>983.752000</average-price>
+    <total-revenue>14756.28</total-revenue>
+  </category>
+  <category name="Sports">
+    <products-count>14</products-count>
+    <average-price>828.770000</average-price>
+    <total-revenue>11602.78</total-revenue>
+  </category>
+  <category name="Business">
+    <products-count>12</products-count>
+    <average-price>663.770833</average-price>
+    <total-revenue>7965.25</total-revenue>
+  </category>
+</categories>

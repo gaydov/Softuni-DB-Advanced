@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<users>
+  <user first-name="Fred" last-name="Barnes">
+    <sold-products>
+      <product>
+        <name>Pleo Ginkgo</name>
+        <price>613.65</price>
+      </product>
+      <product>
+        <name>Ibuprofen</name>
+        <price>1088.04</price>
+      </product>
+    </sold-products>
+  </user>
+  <user first-name="Patricia" last-name="Cooper">
+    <sold-products>
+      <product>
+        <name>ropinirole hydrochloride</name>
+        <price>103.58</price>
+      </product>
+      <product>
+        <name>Buprenorphine hydrochloride and naloxone hydrochloride dihydrate</name>
+        <price>293.33</price>
+      </product>
+    </sold-products>
+  </user>
+  <user last-name="Cunningham">
+    <sold-products>
+      <product>
+        <name>Ibuprofen</name>
+        <price>1305.96</price>
+      </product>
+      <product>
+        <name>Warfarin Sodium</name>
+        <price>1379.79</price>
+      </product>
+    </sold-products>
+  </user>
+  <user first-name="Carl" last-name="Daniels">
+    <sold-products>
+      <product>
+        <name>Alcohol Free Antiseptic</name>
+        <price>1486.07</price>
+      </product>
+    </sold-products>
+  </user>
+  <user first-name="Clarence" last-name="Fowler">
+    <sold-products>
+      <product>
+        <name>Fair Foundation SPF 15</name>
+        <price>1394.24</price>
+      </product>
+    </sold-products>
+  </user>
+  <user first-name="Brandon" last-name="Fuller">
+    <sold-products>
+      <product>
+        <name>AIR</name>
+        <price>581.69</price>
+      </product>
+      <product>
+        <name>ziprasidone hydrochloride</name>
+        <price>628.66</price>
+      </product>
+      <product>
+        <name>leader pain reliever</name>
+        <price>1179.79</price>
+      </product>
+      <product>
+        <name>H-Rosacea Formula</name>
+        <price>99.74</price>
+      </product>
+    </sold-products>
+  </user>
+  <user first-name="Nicole" last-name="Harris">
+    <sold-products>
+      <product>
+        <name>Labetalol Hydrochloride</name>
+        <price>1345.11</price>
+      </product>
+      <product>
+        <name>Meloxicam</name>
+        <price>809.18</price>
+      </product>
+      <product>
+        <name>Gehwol med Lipidro</name>
+        <price>421.24</price>
+      </product>
+      <product>
+        <name>No7 Protect and Perfect Foundation Sunscreen Broad Spectrum SPF 15 Cool Ivory</name>
+        <price>616.19</price>
+      </product>
+    </sold-products>
+  </user>
+  <user first-name="Diana" last-name="Harvey">
+    <sold-products>
+      <product>
+        <name>Peter Island Continous sunscreen kids</name>
+        <price>471.30</price>
+      </product>
+      <product>
+        <name>Glyburide</name>
+        <price>95.10</price>
+      </product>
+    </sold-products>
+  </user>
+  <user first-name="Rachel" last-name="Johnson">
+    <sold-products>
+      <product>
+        <name>PRIMAXIN</name>
+        <price>686.66</price>
+      </product>
+    </sold-products>
+  </user>
+  <user first-name="Chris" last-name="Mitchell">
+    <sold-products>
+      <product>
+        <name>Spironolactone</name>
+        <price>933.69</price>
+      </product>
+      <product>
+        <name>Clarins Paris Skin Illusion - 114 cappuccino</name>
+        <price>811.42</price>
+      </product>
+    </sold-products>
+  </user>
+  <user last-name="Schmidt">
+    <sold-products>
+      <product>
+        <name>Ondansetron</name>
+        <price>1249.76</price>
+      </product>
+      <product>
+        <name>SNORING HP</name>
+        <price>53.59</price>
+      </product>
+    </sold-products>
+  </user>
+  <user first-name="Thomas" last-name="Snyder">
+    <sold-products>
+      <product>
+        <name>Prednisone</name>
+        <price>1285.99</price>
+      </product>
+      <product>
+        <name>Extra Strength Pain Reliever PM</name>
+        <price>542.72</price>
+      </product>
+      <product>
+        <name>pain relief</name>
+        <price>938.23</price>
+      </product>
+      <product>
+        <name>LANEIGE MYSTIC VEIL FOUNDATION</name>
+        <price>20.86</price>
+      </product>
+    </sold-products>
+  </user>
+  <user last-name="Stewart">
+    <sold-products>
+      <product>
+        <name>Agaricus Equisetum Special Order</name>
+        <price>585.93</price>
+      </product>
+    </sold-products>
+  </user>
+  <user first-name="Jeremy" last-name="Woods">
+    <sold-products>
+      <product>
+        <name>Archangelica Eucalyptus</name>
+        <price>1334.91</price>
+      </product>
+      <product>
+        <name>Pioglitazone</name>
+        <price>306.56</price>
+      </product>
+      <product>
+        <name>CALMING DIAPER RASH</name>
+        <price>700.92</price>
+      </product>
+      <product>
+        <name>U-max Multi BB</name>
+        <price>137.16</price>
+      </product>
+      <product>
+        <name>Ringers</name>
+        <price>1054.37</price>
+      </product>
+      <product>
+        <name>PANTOPRAZOLE SODIUM</name>
+        <price>293.89</price>
+      </product>
+      <product>
+        <name>Wintergreen Isopropyl Alcohol</name>
+        <price>1397.57</price>
+      </product>
+    </sold-products>
+  </user>
+</users>

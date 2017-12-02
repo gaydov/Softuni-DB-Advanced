@@ -26,6 +26,7 @@ namespace ProductsShop.App.Core.Commands
             sb.AppendLine("export-categories-xml");
             sb.AppendLine("export-usersandproducts-json");
             sb.AppendLine("export-usersandproducts-xml");
+            sb.AppendLine("exit");
 
             return sb.ToString().TrimEnd();
         }
