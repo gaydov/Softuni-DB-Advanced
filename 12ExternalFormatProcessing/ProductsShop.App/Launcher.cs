@@ -9,7 +9,7 @@ namespace ProductsShop.App
     {
         public static void Main()
         {
-            Mapper.Initialize(cfg => cfg.AddProfile<ProductsShopProfile>());
+            Mapper.Initialize(cfg => cfg.AddProfile<ProductsShopMappingProfile>());
             ProductsShopContext context = new ProductsShopContext();
 
             using (context)
