@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ProductsShop.Models.ModelDTOs
+namespace ProductsShop.App.ModelsDTOs
 {
     public class UserWithSoldProductsDto
     {

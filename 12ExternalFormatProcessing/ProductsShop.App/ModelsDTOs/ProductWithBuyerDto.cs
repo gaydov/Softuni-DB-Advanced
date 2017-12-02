@@ -1,4 +1,4 @@
-﻿namespace ProductsShop.Models.ModelDTOs
+﻿namespace ProductsShop.App.ModelsDTOs
 {
     public class ProductWithBuyerDto
     {

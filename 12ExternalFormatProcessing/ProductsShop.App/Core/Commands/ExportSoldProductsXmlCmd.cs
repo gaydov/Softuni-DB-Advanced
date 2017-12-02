@@ -4,8 +4,8 @@ using System.Linq;
 using System.Xml.Linq;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using ProductsShop.App.ModelsDTOs;
 using ProductsShop.Data;
-using ProductsShop.Models.ModelDTOs;
 
 namespace ProductsShop.App.Core.Commands
 {

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using AutoMapper;
+using ProductsShop.App.ModelsDTOs;
 using ProductsShop.Models;
-using ProductsShop.Models.ModelDTOs;
 
 namespace ProductsShop.App.Core
 {
