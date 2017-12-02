@@ -14,7 +14,7 @@ namespace ProductsShop.App
 
             using (context)
             {
-                ResetDatabase(context);
+                // ResetDatabase(context);
                 CommandInterpreter commandInterpreter = new CommandInterpreter();
                 Engine engine = new Engine(commandInterpreter, context);
 
