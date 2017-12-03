@@ -144,5 +144,22 @@ namespace ProductsShop.App.Core
             context.CategoryProducts.AddRange(cateogoriesProductsForDb);
             context.SaveChanges();
         }
+
+        public static bool ValidateBoolEntered(string promptMessage)
+        {
+            Console.Write(promptMessage);
+            string inputString = Console.ReadLine();
+
+            while (!inputString.ToLower().Equals("y") && !inputString.ToLower().Equals("n"))
+            {
+                Console.WriteLine(Messages.InvalidBoolInput);
+                Console.Write(Environment.NewLine);
+                Console.Write(promptMessage);
+                inputString = Console.ReadLine();
+            }
+
+            bool result = inputString.ToLower().Equals("y");
+            return result;
+        }
     }
 }

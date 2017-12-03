@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="microsoft.entityframeworkcore.sqlserver" Version="2.0.1" />
+    <PackageReference Include="microsoft.entityframeworkcore.tools" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>

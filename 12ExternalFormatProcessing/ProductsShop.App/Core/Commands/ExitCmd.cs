@@ -7,8 +7,14 @@ namespace ProductsShop.App.Core.Commands
     {
         public override string Execute(ProductsShopContext context)
         {
-            Environment.Exit(0);
-            return string.Empty;
+            bool wasExitConfirmed = Helpers.ValidateBoolEntered(Messages.ExitConfirmation);
+
+            if (wasExitConfirmed)
+            {
+                Environment.Exit(0);
+            }
+
+            return "Exit cancelled.";
         }
     }
 }

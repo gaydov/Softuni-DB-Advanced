@@ -25,7 +25,7 @@ namespace ProductsShop.App
         private static void ResetDatabase(DbContext context)
         {
             context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            context.Database.Migrate();
         }
     }
 }

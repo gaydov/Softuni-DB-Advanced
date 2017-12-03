@@ -20,5 +20,7 @@
         public const string MinimumProductsSold = "Minimum products sold: ";
         public const string UserWithProductsExportedToFile = "Users with at least {0} sold products were exported to \"{1}\".";
         public const string XmlEmpty = "The XML file is empty.";
+        public const string InvalidBoolInput = "Invalid input. Please enter \"Y\" or \"N\".";
+        public const string ExitConfirmation = "Are you sure you want to exit? (Y/N): ";
     }
 }
