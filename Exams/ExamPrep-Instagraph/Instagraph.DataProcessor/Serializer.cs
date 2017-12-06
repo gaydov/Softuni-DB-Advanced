@@ -56,17 +56,17 @@ namespace Instagraph.DataProcessor
 
             foreach (UserWithComments userWithComments in users)
             {
-                int mostComments = 0;
+                int mostCommentsCount = 0;
 
                 if (userWithComments.PostsCommentsCount.Count > 0)
                 {
-                    mostComments = userWithComments.PostsCommentsCount.OrderByDescending(x => x).First();
+                    mostCommentsCount = userWithComments.PostsCommentsCount.OrderByDescending(x => x).First();
                 }
 
                 UserWithMostComments currentUser = new UserWithMostComments
                 {
                     Username = userWithComments.Username,
-                    MostComments = mostComments
+                    MostComments = mostCommentsCount
                 };
 
                 resultUsers.Add(currentUser);
