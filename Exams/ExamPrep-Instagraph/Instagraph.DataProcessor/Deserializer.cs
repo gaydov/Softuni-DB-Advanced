@@ -24,8 +24,7 @@ namespace Instagraph.DataProcessor
             foreach (Picture picture in picsFromJson)
             {
                 bool isPicValid = !string.IsNullOrWhiteSpace(picture.Path) && picture.Size > 0;
-                bool picAlreadyExists = context.Pictures.Any(p => p.Path == picture.Path) ||
-                                        resultPics.Any(p => p.Path == picture.Path);
+                bool picAlreadyExists = resultPics.Any(p => p.Path == picture.Path);
 
                 if (!isPicValid || picAlreadyExists)
                 {
