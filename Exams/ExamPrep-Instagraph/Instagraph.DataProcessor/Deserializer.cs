@@ -57,8 +57,7 @@ namespace Instagraph.DataProcessor
                                    userDto.Password.Length <= 20 &&
                                    context.Pictures.Any(p => p.Path == userDto.ProfilePicture);
 
-                bool userAlreadyExists = context.Users.Any(u => u.Username == userDto.Username) ||
-                                         resultUsers.Any(u => u.Username == userDto.Username);
+                bool userAlreadyExists = resultUsers.Any(u => u.Username == userDto.Username);
 
                 if (!isUserValid || userAlreadyExists)
                 {
