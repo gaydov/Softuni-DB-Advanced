@@ -12,4 +12,8 @@
     <ProjectReference Include="..\Stations.Models\Stations.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="EntityConfigs\" />
+  </ItemGroup>
+
 </Project>

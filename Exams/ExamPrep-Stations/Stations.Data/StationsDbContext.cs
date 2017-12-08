@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Stations.Data.EntityConfigs;
 using Stations.Models;
 
 namespace Stations.Data
@@ -38,25 +39,32 @@ namespace Stations.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Station>()
-                .HasAlternateKey(s => s.Name);
+            modelBuilder.ApplyConfiguration(new SeatingClassConfig());
+            modelBuilder.ApplyConfiguration(new StationConfig());
+            modelBuilder.ApplyConfiguration(new TicketConfig());
+            modelBuilder.ApplyConfiguration(new TrainConfig());
+            modelBuilder.ApplyConfiguration(new TrainSeatConfig());
+            modelBuilder.ApplyConfiguration(new TripConfig());
 
-            modelBuilder.Entity<Train>()
-                .HasAlternateKey(t => t.TrainNumber);
+            // modelBuilder.Entity<Station>()
+            //     .HasAlternateKey(s => s.Name);
+               
+            // modelBuilder.Entity<Train>()
+            //     .HasAlternateKey(t => t.TrainNumber);
+               
+            // modelBuilder.Entity<SeatingClass>()
+            //     .HasAlternateKey(sc => new { sc.Name, sc.Abbreviation });
+               
+            // modelBuilder.Entity<Trip>()
+            //     .HasOne(t => t.DestinationStation)
+            //     .WithMany(s => s.TripsTo)
+            //     .HasForeignKey(t => t.DestinationStationId);
 
-            modelBuilder.Entity<SeatingClass>()
-                .HasAlternateKey(sc => new { sc.Name, sc.Abbreviation });
-
-            modelBuilder.Entity<Trip>()
-                .HasOne(t => t.DestinationStation)
-                .WithMany(s => s.TripsTo)
-                .HasForeignKey(t => t.DestinationStationId);
-
-            modelBuilder.Entity<Trip>()
-                .HasOne(t => t.OriginStation)
-                .WithMany(s => s.TripsFrom)
-                .HasForeignKey(t => t.OriginStationId)
-                .OnDelete(DeleteBehavior.Restrict);
+            // modelBuilder.Entity<Trip>()
+            //     .HasOne(t => t.OriginStation)
+            //     .WithMany(s => s.TripsFrom)
+            //     .HasForeignKey(t => t.OriginStationId)
+            //     .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
