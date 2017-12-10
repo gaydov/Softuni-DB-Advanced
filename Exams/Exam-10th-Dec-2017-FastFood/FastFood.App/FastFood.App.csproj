@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="ImportResults\" />
+    <Folder Include="ExportResults\" />
   </ItemGroup>
 
 </Project>

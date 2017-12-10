@@ -43,7 +43,7 @@ namespace FastFood.App
 
         private static void ExportEntities(FastFoodDbContext context)
         {
-            const string ExportDir = "./ImportResults/";
+            const string ExportDir = "./ExportResults/";
 
             string jsonOutput = Serializer.ExportOrdersByEmployee(context, "Avery Rush", "ToGo");
             Console.WriteLine(jsonOutput);
