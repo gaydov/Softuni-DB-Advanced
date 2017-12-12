@@ -13,7 +13,6 @@ namespace Instagraph.DataProcessor
 {
     public class Deserializer
     {
-        //test comment
         private const string SuccessfullyImportedEntityMsg = "Successfully imported {0} {1}.";
         private const string SuccessfullyImportedUserFollowerMsg = "Successfully imported Follower {0} to User {1}.";
         private const string FailureMsg = "Error: Invalid data.";
