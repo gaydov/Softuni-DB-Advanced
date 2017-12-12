@@ -129,8 +129,7 @@ namespace Instagraph.DataProcessor
                 };
 
                 resultUsersFollowers.Add(currentUserFollower);
-                sb.AppendLine(string.Format(SuccessfullyImportedUserFollowerMsg, currentUserFollower.Follower.Username,
-                    currentUserFollower.User.Username));
+                sb.AppendLine(string.Format(SuccessfullyImportedUserFollowerMsg, currentUserFollower.Follower.Username, currentUserFollower.User.Username));
             }
 
             context.UsersFollowers.AddRange(resultUsersFollowers);
